@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{REPORT_TITLE}} - {{CLIENT_NAME}}</title>
+<!--
+  TEMPLATE NOTES (for the fcxo-report skill, not the end user):
+  This is a self-contained, brand-neutral client report. The HTML structure below is
+  fixed; only the brand/design layer is injected, from the user's me/brand/DESIGN.md
+  (tokens in its frontmatter, component recipes in its prose body). To produce a final file:
+   1. Replace  /* @DESIGN_SYSTEM */  with the component CSS generated from DESIGN.md's
+      "Components" recipes, referencing only the :root variables below (never re-hardcoded
+      literals) for branded values; structural geometry (mm, grid, borders) stays literal.
+      The recipe classes this template uses: sheet / page setup and toolbar (.sheet,
+      .toolbar, .no-print), header lockup (.doc-head, .lockup, .mark, .wordmark, .eyebrow,
+      .right, .head-kv with .k/.v), key-value grid (.kv with .k/.v), ledger table (.ledger,
+      .n, .ink), callout (.callout with .key), chip (.chip), footer (.doc-foot, .legal),
+      and the shared text utilities.
+   2. Replace  /* @BRAND_TOKENS */  with the :root tokens emitted from DESIGN.md's
+      frontmatter: every colors key -> --<key> (status -> --green/--amber/--red),
+      typography font-* -> --font-*, scale -> --fs-*, --tracking-label, and --logo-size.
+      Emit the full set incl. the derived --accent-dim/--accent-pale, or they fall back to
+      the default accent. The status tokens matter here: the severity chips use them.
+   3. Embed the logo shell-free: inline an <svg> inside .mark (preferred), or set a
+      data: URL from DESIGN.md logo.src as the .mark img src (or remove .mark for wordmark-only).
+   4. Fill every {{PLACEHOLDER}} (incl. {{BRAND_NAME}} = DESIGN.md brandName), emit one
+      <section class="report-section"> per report section at the @SECTIONS marker, and
+      one <li> per step at the @NEXT_STEPS marker.
+  The third <style> block (REPORT COMPONENTS) is fixed template CSS: the report-only
+  variants the shared recipes do not carry (cover, executive summary, section heading
+  rule, finding block, chip severity variants, next steps, page-break rules). It ships
+  with the template, references only the :root tokens for anything branded, and is never
+  regenerated or rebranded.
+  The result is ONE .html file the user opens in a browser and prints to PDF. Content
+  flows across pages; the print rules keep headings with their sections and keep
+  findings, callouts, and table rows unsplit.
+-->
+<style>/* @DESIGN_SYSTEM */</style>
+<style>:root{ /* @BRAND_TOKENS - e.g. --accent:#1F6B85; --accent-dim:#154E64; --accent-pale:#E7F0F3; --logo-size:34px; */ }</style>
+<style>
+/* REPORT COMPONENTS - fixed template CSS. Branded values via var(--token) only;
+   structural geometry is literal, exactly like the shared recipes. */
+
+/* Cover title block */
+.report-cover{ margin-top:10mm; }
+.report-title{ font-family:var(--font-head); font-size:var(--fs-h1); font-weight:600;
+  line-height:1.12; letter-spacing:-0.015em; color:var(--ink); max-width:160mm; margin:0; }
+.report-meta{ margin-top:5mm; max-width:130mm; }
+
+/* Executive summary - a heavier callout, distinct from the inline aside */
+.exec-summary{ margin-top:8mm; padding:5mm 6mm; background:var(--paper-tint);
+  border-left:3px solid var(--accent); color:var(--ink); line-height:1.55;
+  break-inside:avoid; page-break-inside:avoid; }
+.exec-summary .key{ display:block; font-size:var(--fs-label); font-weight:600;
+  letter-spacing:var(--tracking-label); text-transform:uppercase; color:var(--accent);
+  margin-bottom:2mm; }
+.exec-summary p{ margin:0; }
+.exec-summary p + p{ margin-top:2mm; }
+
+/* Report section with a heading rule */
+.report-section{ margin-top:9mm; }
+.section-head{ font-family:var(--font-head); font-size:var(--fs-h2); font-weight:600;
+  line-height:1.2; letter-spacing:-0.01em; color:var(--ink); margin:0 0 3.5mm;
+  padding-bottom:1.5mm; border-bottom:0.5px solid var(--rule);
+  break-after:avoid; page-break-after:avoid; }
+.report-section p{ margin:0 0 2.5mm; color:var(--ink-2); max-width:74ch; }
+
+/* Finding block - a titled finding with a severity chip */
+.finding{ margin:3.5mm 0 4mm; padding:3.5mm 5mm; border:0.5px solid var(--rule);
+  break-inside:avoid; page-break-inside:avoid; }
+.finding-head{ display:flex; align-items:baseline; justify-content:space-between;
+  gap:6mm; margin-bottom:1.5mm; }
+.finding-title{ font-family:var(--font-head); font-size:var(--fs-body); font-weight:600;
+  color:var(--ink); }
+.finding p{ margin:0; }
+.finding p + p{ margin-top:1.5mm; }
+
+/* Chip severity variants - the status tokens on the shared chip recipe */
+.chip--green{ background:var(--paper-tint); color:var(--green); }
+.chip--amber{ background:var(--paper-tint); color:var(--amber); }
+.chip--red{ background:var(--paper-tint); color:var(--red); }
+
+/* Closing next-steps block */
+.next-steps{ margin-top:10mm; padding-top:4mm; border-top:1px solid var(--ink);
+  break-inside:avoid; page-break-inside:avoid; }
+.next-steps .key{ display:block; font-size:var(--fs-label); font-weight:600;
+  letter-spacing:var(--tracking-label); text-transform:uppercase; color:var(--accent);
+  margin-bottom:2mm; }
+.next-steps ol{ margin:0 0 0 6mm; padding:0; color:var(--ink-2); }
+.next-steps li{ margin:1.2mm 0; }
+.next-steps li::marker{ font-family:var(--font-num); color:var(--ink-muted); }
+
+/* Pagination hygiene */
+.ledger tr{ break-inside:avoid; page-break-inside:avoid; }
+</style>
+</head>
+<body>
+
+<div class="toolbar no-print">
+  <button onclick="window.print()">⌘/Ctrl-P · Save as PDF</button>
+  <span>Opens your browser print dialog. Choose "Save as PDF".</span>
+</div>
+
+<div class="sheet">
+
+  <!-- HEADER -->
+  <header class="doc-head">
+    <div class="lockup">
+      <span class="mark"><img src="{{LOGO_SRC}}" alt=""></span><!-- raster: data: URL src; SVG: replace <img> with inline <svg> -->
+      <span class="wordmark">{{BRAND_NAME}}</span><!-- DESIGN.md brandName -->
+    </div>
+    <div class="right">
+      <span class="eyebrow">{{DOC_TYPE}}</span><!-- e.g. Client report / Assessment report -->
+      <div class="head-kv">
+        <span class="k">Date</span><span class="v">{{REPORT_DATE}}</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- COVER -->
+  <section class="report-cover">
+    <h1 class="report-title">{{REPORT_TITLE}}</h1>
+    <div class="kv report-meta">
+      <span class="k">Prepared for</span><span class="v">{{CLIENT_NAME}}</span>
+      <span class="k">Prepared by</span><span class="v">{{AUTHOR_LINE}}</span>
+    </div>
+  </section>
+
+  <!-- EXECUTIVE SUMMARY -->
+  <section class="exec-summary">
+    <span class="key">Executive summary</span>
+    {{EXEC_SUMMARY}}<!-- one to three <p> paragraphs; a reader who stops here knows the verdict -->
+  </section>
+
+  <!-- REPORT SECTIONS -->
+  <!-- @SECTIONS - one <section class="report-section"> per report section: an
+       <h2 class="section-head"> plus prose, with any of the three optional patterns
+       inside a section where the content calls for them.
+
+  <section class="report-section">
+    <h2 class="section-head">1. Delivery process</h2>
+    <p>Prose paragraph. Evidence before assertion; assumptions marked as assumptions.</p>
+
+    A finding (titled block with a severity chip: chip--green / chip--amber / chip--red):
+    <div class="finding">
+      <div class="finding-head">
+        <span class="finding-title">Deploys depend on one engineer</span>
+        <span class="chip chip--red">High</span>
+      </div>
+      <p>The evidence and its impact, in one or two sentences.</p>
+    </div>
+
+    A recommendation table (the ledger recipe; text columns stay left-aligned, no .n):
+    <table class="ledger">
+      <thead>
+        <tr><th style="width:10mm">No.</th><th>Recommendation</th>
+            <th style="width:24mm">Effort</th><th style="width:24mm">Impact</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>01</td><td class="ink">Automate the deploy pipeline</td><td>Low</td><td>High</td></tr>
+      </tbody>
+    </table>
+
+    A callout (the shared callout recipe, for an important aside):
+    <div class="callout"><span class="key">Assumption</span>Based on the June data export the client provided.</div>
+  </section>
+  -->
+
+  <!-- NEXT STEPS -->
+  <section class="next-steps">
+    <span class="key">Next steps</span>
+    <ol>
+      <!-- @NEXT_STEPS - one <li> per step, concrete and owned:
+      <li><strong>Automate the deploy pipeline</strong> (owner: client eng lead, by 15 July)</li>
+      -->
+    </ol>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="doc-foot">
+    <span class="legal">{{FOOTER_LEGAL}}</span>
+  </footer>
+
+</div>
+</body>
+</html>

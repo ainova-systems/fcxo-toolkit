@@ -1,0 +1,24 @@
+{
+  "name": "fcxo-toolkit",
+  "version": "0.1.0",
+  "description": "Operational toolkit for fractional executives (CEO/CMO/CSO/CTO/COO/CFO): find and win clients (research, qualify, outreach, call prep, proposals), deliver and retain (status updates, decision reports, onboarding plans, renewal reviews, branded client reports), market yourself, and run the back-office of a solo practice. Role-aware, works standalone, shell-free so it runs the same in Claude Code and Claude Cowork, anchored on a lightweight markdown practice workspace.",
+  "author": {
+    "name": "Dmitrij Zykovic",
+    "url": "https://github.com/ainova-systems"
+  },
+  "homepage": "https://github.com/ainova-systems/fcxo-toolkit#readme",
+  "repository": "https://github.com/ainova-systems/fcxo-toolkit",
+  "keywords": [
+    "fractional",
+    "fractional-cxo",
+    "consulting",
+    "advisory",
+    "sales",
+    "proposals",
+    "client-reports",
+    "reports",
+    "invoicing",
+    "personal-brand"
+  ],
+  "license": "MIT"
+}

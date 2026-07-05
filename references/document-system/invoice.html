@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Invoice {{INVOICE_NO}} – {{FROM_NAME}}</title>
+<!--
+  TEMPLATE NOTES (for the fcxo-invoice / fcxo-brand skill, not the end user):
+  This is a self-contained, brand-neutral invoice. The HTML structure below is fixed;
+  only the brand/design layer is injected, from the user's practice/me/brand/DESIGN.md
+  (tokens in its frontmatter, component recipes in its prose body). To produce a final file:
+   1. Replace  /* @DESIGN_SYSTEM */  with the component CSS generated from DESIGN.md's
+      "Components" recipes, referencing only the :root variables below (never re-hardcoded
+      literals) for branded values; structural geometry (mm, grid, borders) stays literal.
+   2. Replace  /* @BRAND_TOKENS */   with the :root tokens emitted from DESIGN.md's
+      frontmatter: every colors key -> --<key> (status -> --green/--amber/--red),
+      typography font-* -> --font-*, scale -> --fs-*, --tracking-label, and --logo-size.
+      Emit the full set incl. the derived --accent-dim/--accent-pale, or they fall back to
+      the default accent.
+   3. Embed the logo shell-free: inline an <svg> inside .mark (preferred), or set a
+      data: URL from DESIGN.md logo.src as the .mark img src (or remove .mark for wordmark-only).
+   4. Fill every {{PLACEHOLDER}} (incl. {{BRAND_NAME}} = DESIGN.md brandName) and the
+      <!-- @LINE_ITEMS --> rows.
+  The result is ONE .html file the user opens in a browser and prints to PDF.
+-->
+<style>/* @DESIGN_SYSTEM */</style>
+<style>:root{ /* @BRAND_TOKENS – e.g. --accent:#1F6B85; --accent-dim:#154E64; --accent-pale:#E7F0F3; --logo-size:34px; */ }</style>
+</head>
+<body>
+
+<div class="toolbar no-print">
+  <button onclick="window.print()">⌘/Ctrl-P · Save as PDF</button>
+  <span>Opens your browser print dialog. Choose “Save as PDF”.</span>
+</div>
+
+<div class="sheet">
+
+  <!-- HEADER -->
+  <header class="doc-head">
+    <div class="lockup">
+      <span class="mark"><img src="{{LOGO_SRC}}" alt=""></span><!-- raster: data: URL src; SVG: replace <img> with inline <svg> -->
+      <span class="wordmark">{{BRAND_NAME}}</span><!-- DESIGN.md brandName; falls back to FROM_NAME -->
+    </div>
+    <div class="right">
+      <span class="eyebrow">{{DOC_TITLE}}</span>
+      <div class="doc-no"><span class="series">{{INVOICE_SERIES}}</span>{{INVOICE_NUM}}</div>
+      <div class="head-kv">
+        <span class="k">Issue date</span><span class="v">{{ISSUE_DATE}}</span>
+        <span class="k">Due date</span><span class="v">{{DUE_DATE}}</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- PARTIES -->
+  <section class="parties">
+    <div>
+      <span class="eyebrow eyebrow--accent">Bill to</span>
+      <div class="party-name">{{BILL_TO_NAME}}</div>
+      <div class="kv">
+        <span class="k">Address</span><span class="v">{{BILL_TO_ADDRESS}}</span>
+        <span class="k">Tax / VAT</span><span class="v mono">{{BILL_TO_TAXID}}</span>
+        <span class="k">Email</span><span class="v">{{BILL_TO_EMAIL}}</span>
+      </div>
+    </div>
+    <div>
+      <span class="eyebrow eyebrow--accent">From</span>
+      <div class="party-name">{{FROM_NAME}}</div>
+      <div class="kv">
+        <span class="k">Address</span><span class="v">{{FROM_ADDRESS}}</span>
+        <span class="k">Tax / VAT</span><span class="v mono">{{FROM_TAXID}}</span>
+        <span class="k">Email</span><span class="v">{{FROM_EMAIL}}</span>
+        <span class="k">Payment</span><span class="v mono">{{FROM_PAYMENT}}</span><!-- IBAN compact, no spaces -->
+      </div>
+    </div>
+  </section>
+
+  <!-- LINE ITEMS -->
+  <section class="section">
+    <table class="ledger">
+      <thead>
+        <tr>
+          <th style="width:10mm">No.</th>
+          <th>Description</th>
+          <th class="n" style="width:26mm">Unit</th>
+          <th class="n" style="width:14mm">Qty</th>
+          <th class="n" style="width:28mm">Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- @LINE_ITEMS – one <tr> per line:
+        <tr><td>01</td><td class="ink">Fractional CMO retainer – June 2026</td>
+            <td class="n">4,200.00</td><td class="n">1</td><td class="n ink">4,200.00</td></tr>
+        -->
+      </tbody>
+    </table>
+  </section>
+
+  <!-- TOTALS -->
+  <section class="totals">
+    <div></div>
+    <div class="totals-stack">
+      <span class="k">Subtotal</span><span class="v">{{SUBTOTAL}}</span>
+      <!-- @VAT_ROW (omit entirely if the user does not charge VAT):
+      <span class="k">{{VAT_LABEL}}</span><span class="v">{{VAT_AMOUNT}}</span> -->
+      <span class="rule"></span>
+      <span class="k grand-k">Total due</span><span class="grand-v">{{TOTAL_DUE}}</span>
+    </div>
+  </section>
+
+  <!-- AMOUNT IN WORDS (optional) -->
+  <section class="amount-words">
+    <span class="k">Amount in words</span>{{AMOUNT_WORDS}}
+  </section>
+
+  <!-- PAYMENT TERMS -->
+  <section class="terms">
+    <span class="k">Payment terms</span>
+    <span class="v">Payable within <strong>{{TERMS_DAYS}} days</strong> of the issue date.
+      Please reference <strong>{{INVOICE_NO}}</strong> on the transfer.</span>
+  </section>
+
+  <!-- SIGNATURE -->
+  <section class="sig">
+    <div>
+      <span class="label">Issued by</span>
+      <div class="sig-name">{{SIGNER_NAME}}</div>
+      <div class="sig-role">{{SIGNER_ROLE}}</div>
+    </div>
+  </section>
+
+  <!-- FOOTER (one-page invoice: legal line only, no page number) -->
+  <footer class="doc-foot">
+    <span class="legal">{{FOOTER_LEGAL}}</span>
+  </footer>
+
+</div>
+</body>
+</html>
