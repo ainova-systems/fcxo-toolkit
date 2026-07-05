@@ -13,11 +13,12 @@ Done as part of public-release prep (repo `ainova-systems/fcxo-toolkit`):
 - [x] Least-privilege pass over every skill's `allowed-tools`: web tools only where the
       body genuinely fetches, `Edit` present exactly where an existing file is modified,
       and no `Bash` anywhere - the plugin is shell-free by design.
+- [x] Public repo created and pushed with a clean history.
 
-Remaining (owner action): create the public repo, push, and tag `v0.1.0`. After the tag,
-submit the plugin to the Anthropic community directory (public repo required; automated
-validation) so it surfaces in the in-product Discover tab and the claude.com/plugins
-catalog that Claude Cowork users browse.
+Remaining (owner action): tag `v0.1.0`. After the tag, submit the plugin to the
+Anthropic community directory (public repo required; automated validation) so it
+surfaces in the in-product Discover tab and the claude.com/plugins catalog that
+Claude Cowork users browse.
 
 ## Planned skills (v2)
 
