@@ -12,7 +12,7 @@ It is **role-aware** (you set your role once, every skill adapts its lens), **wo
 /plugin install fcxo-toolkit@fcxo
 
 # Or from a local clone (run from the repo folder, or pass its path)
-/plugin marketplace add .
+/plugin marketplace add ./
 /plugin install fcxo-toolkit@fcxo
 
 # Or load it for a single session without installing
