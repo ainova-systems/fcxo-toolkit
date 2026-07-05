@@ -136,6 +136,11 @@ document) and every document matches. Until you do, documents use a clean defaul
 - **Standalone-first.** No connector is required. Connect your tools to make skills richer, not to make them work.
 - **Lean.** A small set of skills that each earn their place, over a large set of half-baked ones.
 
+## Data handling
+
+Instruction-only skills, local files only, no telemetry, draft-only outward
+communication. See [PRIVACY.md](PRIVACY.md) for the full disclosure.
+
 ## Versioning
 
 See `CHANGELOG.md`. This repository is the source project; the installable plugin is built from it and follows [Semantic Versioning](https://semver.org/).
