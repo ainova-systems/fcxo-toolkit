@@ -5,6 +5,19 @@ All notable changes to the FCxO Toolkit plugin.
 The format is based on [Keep a Changelog](https://keepachangelog.com/), and this
 project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.1.1] - 2026-07-07
+
+### Fixed
+
+- Marketplace plugin `source` changed from the bare string `"."` to the object form
+  `{ "source": "github", "repo": "ainova-systems/fcxo-toolkit" }`. Claude Code's CLI
+  validator accepts a string source, but Claude Cowork (the claude.ai server-side
+  marketplace sync, `remoteMarketplaceOps`) rejects it with `External plugin sources
+  must be objects with a 'source' field (github, url, or git-subdir)`, so adding the
+  marketplace in Cowork failed with "Marketplace sync failed". The object source lets
+  Cowork and the community-directory sync resolve the plugin, while CLI installs keep
+  working.
+
 ## [0.1.0] - 2026-07-05
 
 First public release: 24 skills. A shell-free toolkit (file tools only) that runs the
@@ -114,4 +127,5 @@ same in Claude Code and Claude Cowork, with nothing to install.
   status updates and deliverables feed the renewal review; the renewal review feeds
   case studies; case studies feed proposals and posts.
 
+[0.1.1]: https://github.com/ainova-systems/fcxo-toolkit/releases/tag/v0.1.1
 [0.1.0]: https://github.com/ainova-systems/fcxo-toolkit/releases/tag/v0.1.0
