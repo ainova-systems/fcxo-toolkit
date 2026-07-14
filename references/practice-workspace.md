@@ -116,10 +116,13 @@ they are internal notes, so they have no design twin.
 
 One file per procedure, named `sop/<Procedure> - SOP.md`. An SOP says what the procedure
 reads, the steps the owner takes, and the shape of the output it leaves behind.
-`/fcxo-write-sop` writes one from a procedure the owner already runs by hand: it reads the
-past outputs of that procedure, which are the specification of the output format. Whatever
-configuration the procedure needs (its sources, its filters, its thresholds) sits beside it
-in `sop/`, because it belongs to the procedure.
+`/fcxo-write-sop` produces one from any starting point. Given a procedure the owner already
+runs by hand, it captures the SOP from the past outputs of that procedure, which are the
+specification of the output format. Given a bare goal with no procedure yet, it researches how
+the work is done, reads the owner's own practice (positioning, offers, ICP, records), and
+drafts a proposed procedure the owner refines by running it. Whatever configuration the
+procedure needs (its sources, its filters, its thresholds) sits beside it in `sop/`, because
+it belongs to the procedure.
 
 A procedure in `sop/` can be **scheduled** (a scheduled task follows it, with nothing
 installed) or **built into a skill** (`/fcxo-learn-skill` writes `skills/<name>/SKILL.md`,

@@ -5,6 +5,23 @@ All notable changes to the FCxO Toolkit plugin.
 The format is based on [Keep a Changelog](https://keepachangelog.com/), and this
 project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.2.2] - 2026-07-15
+
+### Changed
+
+- `fcxo-write-sop` – **the flexible front door to an SOP.** It produces an SOP from any
+  starting point, doing the least work that yields a real one. Given a procedure the user
+  already runs, with past outputs, a note, or a clear description, it captures the SOP from
+  that evidence and stops: if the evidence answers the procedure, it never opens a web
+  search. Given a bare goal and no procedure yet, the SOP does not exist to capture, so it
+  builds one - it researches how the work is actually done, pulls the user's own specifics
+  from the workspace (positioning, offers, ICP, records) rather than inventing them, asks
+  what is genuinely open, and drafts a proposed procedure the user owns and refines by
+  running it. `WebFetch` and `WebSearch` join its allowed tools for the research rung, and it
+  stays shell-free (no `Bash`, no subagents). Either way the result is the same file,
+  `sop/<Procedure> - SOP.md`, which is then scheduled or built into a skill. Its research
+  half now overlaps `fcxo-learn-skill`, which is unchanged.
+
 ## [0.2.1] - 2026-07-14
 
 ### Added
@@ -225,6 +242,7 @@ same in Claude Code and Claude Cowork, with nothing to install.
   status updates and deliverables feed the renewal review; the renewal review feeds
   case studies; case studies feed proposals and posts.
 
+[0.2.2]: https://github.com/ainova-systems/fcxo-toolkit/releases/tag/v0.2.2
 [0.2.1]: https://github.com/ainova-systems/fcxo-toolkit/releases/tag/v0.2.1
 [0.2.0]: https://github.com/ainova-systems/fcxo-toolkit/releases/tag/v0.2.0
 [0.1.1]: https://github.com/ainova-systems/fcxo-toolkit/releases/tag/v0.1.1

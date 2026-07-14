@@ -111,17 +111,23 @@ The pipeline review is what tells you which engagement is ripe for one.
 
 `/fcxo-write-sop` → schedule it, or `/fcxo-learn-skill`
 
-A procedure you run by hand is the unit here. Write it down first, then decide how it should
-run.
+An SOP is the unit here, and `/fcxo-write-sop` is the entry point whether or not the
+procedure already exists. When you already run the job by hand, it captures the SOP from what
+you produced. When you bring a bare goal and no procedure yet, it researches how the work is
+done, reads your practice, and drafts a proposed procedure for you to refine. Either way you
+get the SOP first, then decide how it should run.
 
 | Skill | Reads | Writes |
 |---|---|---|
-| `/fcxo-write-sop` | the procedure as you describe it, and the outputs you produced by hand the last few times you ran it | `sop/<Procedure> - SOP.md`, plus whatever configuration the procedure needs, beside it |
+| `/fcxo-write-sop` | a procedure you already run (its past outputs fix the output format) or a bare goal (then the web, plus your own positioning, offers, ICP and records) | `sop/<Procedure> - SOP.md`, plus whatever configuration the procedure needs, beside it |
 | `/fcxo-learn-skill` | an SOP (or a goal, a sample output, a URL, a reference skill, the task you just did) | `skills/<name>/SKILL.md` in your workspace, for you to upload |
 
-**Write it.** `/fcxo-write-sop` reads your past outputs of the procedure, because they are
-the specification of the output format: whatever the next run produces has to look like
-them. The result is one file in `sop/`, in your words, that a person or an agent can follow.
+**Write it.** `/fcxo-write-sop` produces the SOP from wherever you start. Given a procedure
+you already run, it reads your past outputs, because they are the specification of the output
+format: whatever the next run produces has to look like them. Given a bare goal, it researches
+how the work is done, grounds the steps in your own practice, and drafts a proposed procedure
+you sharpen as you run it. The result is one file in `sop/`, in your words, that a person or
+an agent can follow.
 
 **Schedule it.** A scheduled task whose prompt says "follow `sop/<Procedure> - SOP.md`" runs
 the procedure on a cadence. Nothing is installed, nothing is built, and it works today.

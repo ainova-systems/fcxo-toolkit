@@ -66,7 +66,7 @@ practice/
 
 Every filename is self-identifying and unique across the workspace, so the folder opens cleanly as an Obsidian vault (no two notes share a basename). Owner files are prefixed with your name, company files with the company name, leads end with `- Lead`, and dated outputs lead with the date. Skills find a file by its frontmatter `type:` and filename suffix, never by a fixed generic name. `templates/` and `design/` are the one exception: their files are named for the document type they define, so `templates/Proposal.md` and `design/Proposal.html` pair up by basename.
 
-**A procedure you follow is one file in `sop/`.** `/fcxo-write-sop` writes it from the way you already run the job by hand, reading the outputs of your past runs, which are the specification of what the next one has to produce. From there a procedure can be **scheduled** (a scheduled task follows the SOP, with nothing installed) or **built into a skill** (`/fcxo-learn-skill` writes `skills/<name>/SKILL.md`, which you upload to your Claude account and call with `/`). A schedule runs the procedure without you. A skill lets you run it whenever you want.
+**A procedure you follow is one file in `sop/`.** `/fcxo-write-sop` produces it from any starting point. When you already run the job by hand, it captures the SOP from the outputs of your past runs, which are the specification of what the next one has to produce. When you bring a bare goal and no procedure yet, it researches how the work is done, reads your own practice, and drafts a proposed procedure you own and refine by running it. From there a procedure can be **scheduled** (a scheduled task follows the SOP, with nothing installed) or **built into a skill** (`/fcxo-learn-skill` writes `skills/<name>/SKILL.md`, which you upload to your Claude account and call with `/`). A schedule runs the procedure without you. A skill lets you run it whenever you want.
 
 Light, optional frontmatter (e.g. `type:`, `role:`, `status:`) helps both you and the skills read a note at a glance. Nothing is enforced or validated – it is just structure.
 
@@ -88,7 +88,7 @@ What your workspace holds is the registry: `Practice Workspace - Integrations.md
 | `/fcxo-init` | First-time setup. Creates the practice workspace, records your role and billing details, optionally sets up Obsidian. |
 | `/fcxo-new-client` | Adds a new client and/or engagement to your workspace. |
 | `/fcxo-brainstorm` | Grills you on any plan, decision, or topic – one question at a time, every answer checkpointed to a capture file so nothing is lost. Onboarding hands off here to extract your positioning and offers. |
-| `/fcxo-write-sop` | Writes down a procedure you already run by hand. It reads your past outputs of it, which fix the output format, and saves `sop/<Procedure> - SOP.md`. From there you schedule it, or build a skill from it. |
+| `/fcxo-write-sop` | Produces an SOP from any starting point. Given a procedure you already run, it captures it from your past outputs, which fix the output format. Given a bare goal, it researches how the work is done, reads your practice, and drafts a proposed procedure you refine. Either way it saves `sop/<Procedure> - SOP.md`, which you then schedule or build a skill from. |
 | `/fcxo-learn-skill` | Builds a reusable skill from anything you bring – an SOP, a goal, a sample output, a reference skill, a URL, or the task you just did. It researches how others do it, finalizes scope with a short interview, and writes `skills/<name>/SKILL.md` in your workspace. You compress that folder and upload it to your Claude account (Customize -> Skills -> "+" -> Create skill -> Upload a skill), and call it with `/`. |
 
 **Find & win clients**
@@ -158,8 +158,8 @@ document) and every document matches. Until you do, documents use a clean defaul
 The table above says what each skill does. The order they run in, and the file each one
 leaves behind for the next, is in [`references/workflows.md`](references/workflows.md):
 setting up once, a new company appearing, a conversation running, a deal converting, an
-engagement running, the practice itself, and the work that repeats (write the procedure,
-then schedule it or build a skill from it).
+engagement running, the practice itself, and the work that repeats (produce the procedure from a
+procedure you run or a bare goal, then schedule it or build a skill from it).
 
 You can run any skill on its own and skip whole sequences. The order matters because the
 files accumulate: a call summary feeds the status update, the updates feed the renewal

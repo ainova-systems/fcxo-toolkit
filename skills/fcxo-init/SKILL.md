@@ -224,8 +224,9 @@ or proposal is written.
 
 `sop/` holds the procedures the user follows, written down, one file each
 (`sop/<Procedure> - SOP.md`), with each procedure's configuration beside it. `me/` is
-identity, so a procedure lives here and not there. `/fcxo-write-sop` writes the first one;
-say in the guide that a procedure in `sop/` can be **scheduled** (a scheduled task follows
+identity, so a procedure lives here and not there. `/fcxo-write-sop` produces the first one,
+from a procedure the user already runs or from a bare goal it researches and grounds in the
+practice; say in the guide that a procedure in `sop/` can be **scheduled** (a scheduled task follows
 it, with nothing installed) or **built into a skill** (`/fcxo-learn-skill` writes
 `skills/<name>/SKILL.md`, which the user uploads to their Claude account and calls with
 `/`). A schedule runs it without them. A skill lets them run it whenever they want.
@@ -286,7 +287,7 @@ Summarize what was created in plain language (where it is, what's inside, what's
 `TODO`). List the root files by name, `Practice Workspace - Guide.md` and
 `Practice Workspace - Integrations.md`, alongside the `me/`, `sop/`, `templates/` and
 `design/` starters. Say in one line what `sop/` is for: the procedures they follow, written
-down, one file each, which `/fcxo-write-sop` writes and which they then schedule or build
+down, one file each, which `/fcxo-write-sop` produces and which they then schedule or build
 into a skill. Mention that the scaffolded files are wikilinked to each other (the guide and
 the `me/` files cross-link), so the workspace opens as a connected graph in Obsidian.
 
