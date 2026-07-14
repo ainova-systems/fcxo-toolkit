@@ -76,12 +76,14 @@ practice/
 ├── content/                # LinkedIn / brand drafts, case studies
 ├── finance/                # invoices, tracking
 ├── research/               # reusable research and DATED skill outputs (scans, reviews)
+├── sop/                    # the procedures the owner follows, one file each
+│   └── <Procedure> - SOP.md   # written by fcxo-write-sop; scheduled, or built into a skill
 ├── templates/              # DATA templates: what fields a document type has
 ├── design/                 # DESIGN templates: how a document type looks
 │   ├── DESIGN.md           # brand tokens + component recipes (the one file the user edits)
 │   ├── <logo file>         # optional logo, inlined into documents at render time
 │   └── <Doc>.html          # one branded HTML layout per document type
-└── skills/<name>/SKILL.md  # the user's own skills, staged by fcxo-learn-skill
+└── skills/<name>/SKILL.md  # a skill the user built, as source; uploaded to their Claude account
 ```
 
 `<slug>` and `<id>` are short folder keys (e.g. `harbor-analytics`, `retainer-2026`);
@@ -101,12 +103,46 @@ they only group files. The **filename** still stands alone, so an engagement fil
 A document skill writes markdown against the **data** template, and a render fills the
 **design** template of the same name. A design template with no data twin renders
 nothing; a data template with no design twin still saves as plain markdown and simply
-has no branded output. `/fcxo-setup-template` creates or replaces a pair from a design
-sample, so the user can design a document in Claude, hand the result to the toolkit,
-and have every future document of that type come out in that layout.
+has no branded output. `/fcxo-setup-template` completes a pair from whichever half
+exists: it builds the design half from an existing `templates/<Doc>.md`, or the data
+half from a layout the user designed in Claude, and it builds both only when neither is
+there. A half already on disk is the user's work, so the skill reads it as the spec for
+the other half and leaves it alone.
 
 Records (`Lead.md`, `Client - Profile.md`, `Engagement.md`) are **data templates only**:
 they are internal notes, so they have no design twin.
+
+## `sop/` – the procedures the owner follows, written down
+
+One file per procedure, named `sop/<Procedure> - SOP.md`. An SOP says what the procedure
+reads, the steps the owner takes, and the shape of the output it leaves behind.
+`/fcxo-write-sop` writes one from a procedure the owner already runs by hand: it reads the
+past outputs of that procedure, which are the specification of the output format. Whatever
+configuration the procedure needs (its sources, its filters, its thresholds) sits beside it
+in `sop/`, because it belongs to the procedure.
+
+A procedure in `sop/` can be **scheduled** (a scheduled task follows it, with nothing
+installed) or **built into a skill** (`/fcxo-learn-skill` writes `skills/<name>/SKILL.md`,
+which the user uploads and calls with `/`). A schedule runs it without them. A skill lets
+them run it whenever they want.
+
+## `me/` is identity, and a procedure is not identity
+
+`me/` holds who the owner is: the profile, the positioning, the offers, the voice. A
+procedure is something the owner does, so it lives in `sop/`, together with its
+configuration. Nothing about a procedure belongs in `me/`.
+
+## `skills/` holds a built skill as source
+
+One folder per skill, `skills/<name>/SKILL.md`. That is where `/fcxo-learn-skill` writes,
+and it is the durable source the user keeps and edits.
+
+A skill becomes usable by being **uploaded to the user's Claude account**: compress the
+skill folder into a ZIP whose root is that folder, then go to
+**Customize -> Skills -> "+" -> Create skill -> Upload a skill**. The account is where the
+skill runs and where `/` finds it. The folder on disk is source; it is not live. The
+toolkit is shell-free, so it cannot build the ZIP and cannot install anything: a skill that
+writes a skill says so, with that menu path.
 
 ## Integrations: the workspace names the tool, the toolkit ships none
 
@@ -138,12 +174,24 @@ invites, notifies, or shares.
 
 ## Reading context (do this before asking the user)
 
+**A company name is a complete argument.** The user names the company and the thing they
+want (`Talvora Analytics`, `Talvora Analytics proposal`); everything else is the skill's
+job. Resolve the company folder by globbing `leads/**/*- Lead.md` and `clients/*/*- Profile.md`
+and matching on the company name, the folder slug, or the record's `domain:`. Then read that
+folder in full - the record, `communications/`, `meetings/`, `proposals/`, the engagement -
+plus the owner's `me/` files, and find the data template (`templates/<Doc>.md`) and the
+design template (`design/<Doc>.html`) for the document type by name. The save path and the
+filename follow from the tables below, so neither is ever a question. A skill that asks the
+user for something the workspace already states has failed at the one job the workspace
+exists for.
+
 - **Role** → the owner profile `me/*- Profile.md` (`type: profile`), frontmatter `role:`. Drives every skill's lens. If absent, ask once and offer to record it.
 - **Voice / positioning** → `me/*- Positioning.md` (`type: positioning`). The source for how outreach, posts, and proposals describe the user. Never invent positioning (the writing rule lives in `copy-principles.md`); read this first.
 - **Rates / offers** → `me/*- Offers.md` (`type: offers`). Used by qualify, proposal, invoice.
 - **Voice / post style** → `me/*- Voice.md` (`type: voice`). How the user's posts sound, plus the do's and don'ts; `fcxo-post` reads it and appends durable feedback to it. Built from positioning, past `content/`, or a brainstorm when absent.
 - **Leads** → `leads/**/*- Lead.md` (`type: lead`). One per lead folder. A lead's history is its siblings: `communications/`, `meetings/`, `proposals/`.
 - **Client / engagement** → `clients/<slug>/…`. Scope, price, status, rate live in the engagement file `clients/*/engagements/**/*- Engagement.md` (`type: engagement`).
+- **A procedure** → `sop/*- SOP.md` (`type: sop`), with its configuration beside it. Read the SOP when following the procedure by hand, when a scheduled task runs it, and when `/fcxo-learn-skill` builds a skill from it.
 - **Billing details** → `design/DESIGN.md` `from` block (legal name, address, tax id, payment info, currency), falling back to the owner profile. Used by invoice.
 - **Brand / document look** → `design/DESIGN.md` (the document design system: tokens in frontmatter - accent, fonts, logo, invoice series, VAT - plus component recipes in the body, all in this one file) plus the `design/<Doc>.html` layout for the document being produced. Written by `fcxo-init` (default), `fcxo-brand` (tokens) and `fcxo-setup-template` (layouts); read by every document skill. If absent, documents use the plugin default.
 
@@ -170,7 +218,8 @@ one-company-one-folder rule.
 | Invoice | `finance/` |
 | Reusable research | `research/` |
 | Dated skill output (pipeline review, lead scan) | `research/<YYYY-MM-DD> - <Topic>.md` |
-| A skill the user built | `skills/<name>/SKILL.md` |
+| A procedure the owner follows, written down (and its configuration) | `sop/<Procedure> - SOP.md` |
+| A skill the user built (the source folder; they upload it to their Claude account to run it) | `skills/<name>/SKILL.md` |
 | A document layout the user designed | `design/<Doc>.html`, paired with `templates/<Doc>.md` |
 
 When no workspace is present, skip the write and return the result in chat.
@@ -200,7 +249,7 @@ not validate or block on them.
 
 ```yaml
 ---
-type: profile | positioning | offers | voice | lead | client | engagement | deliverable | meeting | communication | proposal | invoice | post | survey | case-study | brainstorm | template
+type: profile | positioning | offers | voice | sop | lead | client | engagement | deliverable | meeting | communication | proposal | invoice | post | survey | case-study | brainstorm | template
 role: cto            # on the owner profile
 status: draft | new | active | won | lost | sent | paid
 updated: 2026-06-08
@@ -223,7 +272,10 @@ genuinely depends on it.
 - **Outward communications are draft-only.** Never send email or messages. Deliver the draft into the workspace (or chat) for the user to send. This holds for connected tools. A calendar hold on the user's **own** calendar is a private note to self and is allowed. Adding a guest to an event makes the calendar send that person an invitation, which is an outward message, so never add a guest and never create or modify any event that already has attendees. If the event you would touch has guests, stop, say why, and let the user change it themselves.
 - **The connector write boundary.** A guest-free calendar hold is the only write a skill makes through a connected tool. Email, chat, CRM, drive and every other connector are read-only: read from them, draft into the workspace. No skill sends, invites, notifies, or shares. A skill the user builds inherits this rule.
 - **No invented positioning.** The writing rule lives in `copy-principles.md`. Read `me/*- Positioning.md`; if it is empty, ask the user. Never fabricate positioning.
-- **Workspace optional.** Every skill must degrade gracefully to standalone: ask for the few facts it needs and return the result in chat. The setup skills are the exception, since they operate on the workspace itself: `fcxo-init` and `fcxo-new-client` ask the user to run `/fcxo-init` first when no workspace exists.
-- **The `fcxo-` prefix is reserved** for the skills that ship with this plugin. A skill the user builds gets a plain descriptive name (`weekly-lead-opportunity-scan`), so it can never shadow a toolkit skill.
+- **Workspace optional.** Every skill must degrade gracefully to standalone: ask for the few facts it needs and return the result in chat. The setup skills are the exception, since they operate on the workspace itself: `fcxo-init`, `fcxo-new-client` and `fcxo-setup-template` ask the user to run `/fcxo-init` first when no workspace exists.
+- **`me/` is identity only.** The profile, the positioning, the offers, the voice. A procedure the owner follows is not identity: it lives in `sop/`, with its configuration beside it.
+- **A built skill lives in `skills/` as source, and runs from the user's Claude account.** `/fcxo-learn-skill` writes `skills/<name>/SKILL.md`; the user compresses that folder into a ZIP whose root is the folder and uploads it at **Customize -> Skills -> "+" -> Create skill -> Upload a skill**. Never imply the file on disk is live, and never mention `.claude/skills/`, which does nothing in Cowork. The toolkit is shell-free, so it builds no ZIP and installs nothing.
+- **The `fcxo-` prefix is reserved** for the skills that ship with this plugin. A skill the user builds gets a plain descriptive name (`lead-opportunity-scan`), so it can never shadow a toolkit skill.
+- **A skill is named for what it does.** `lead-opportunity-scan` says the work, and the schedule owns the cadence, so the same skill keeps that name whether it runs weekly, every second week, or on demand. Capability and cadence are separate layers, and a name that fixes the cadence is a restriction with no upside: it becomes a lie the first time the cadence changes.
 - **Shell-free.** Skills use the file tools (`Read`, `Write`, `Edit`, `Glob`) and never `Bash`. Folders are created by writing a file into them; documents embed logos as inline `<svg>` or a `data:` URL, never via a shell. This keeps every skill runnable in a Claude Cowork session as well as in Claude Code. (`WebFetch` / `WebSearch` are fine where a skill genuinely researches the web.)
 - **The toolkit ships no connectors.** A skill that needs a connected tool reads `Practice Workspace - Integrations.md` to learn which one the user has, and uses it through the agent surface's own connector. Never name a vendor inside a skill, and never ask the user for a credential, an API key, or an OAuth flow.

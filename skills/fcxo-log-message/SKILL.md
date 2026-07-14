@@ -17,7 +17,10 @@ the wiki convention, and the draft-only rule.
 
 ## Get the message
 
-- **Pasted text** -> use it as given. This is always enough; the skill needs nothing else.
+- **Pasted text** -> use it as given. **A pasted message is a complete instruction**: the
+  message carries its own sender, date, and subject, and those three resolve the company
+  and the thread on their own. Ask nothing further, and do not ask the user to confirm what
+  the header already says.
 - **The user points at a message they have not pasted** ("log the email from Harbor") ->
   `Read` `Practice Workspace - Integrations.md` and check the Email row. If a connected
   tool is registered there, pull the message from it **read-only** through the agent
@@ -35,10 +38,13 @@ destination sub-folder is `communications/` either way, so resolve the folder on
 rest of this skill is identical for a lead and for a client.
 
 - Identify the **company** the message belongs to. `Glob leads/**/*- Lead.md` and
-  `Glob clients/*/*- Profile.md` and match the correspondent's company against both; the
-  match tells you which folder to write into. If it matches neither, ask once, and offer
+  `Glob clients/*/*- Profile.md`, then match on, in order: the **email domain** of the
+  sender against the record's `domain:` frontmatter and the addresses inside it, the
+  **correspondent's name**, and the company name in the message. The domain is the strongest
+  signal and usually settles it alone. If nothing matches, ask once, and offer
   `/fcxo-qualify` when it is a new prospect with no folder yet.
-- Identify the **thread** (the subject or conversation the message continues).
+- Identify the **thread** (the subject or conversation the message continues). A `Re:`
+  subject continues the thread that carries the same subject without it.
 - `Glob <company>/communications/*` and read the candidates to find the existing thread
   file by subject and correspondent. **One thread = one file.**
 - **No workspace** -> format the entry the same way, return it in chat, and offer to

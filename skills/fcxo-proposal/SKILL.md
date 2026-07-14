@@ -19,13 +19,22 @@ found, never assume a fixed path prefix.
 
 ## Input
 
-`$ARGUMENTS`: a lead name or slug, an existing client name, or a short description of
-the deal. Optionally the engagement shape and a start date. If empty, ask which lead or
-client this proposal is for.
+`$ARGUMENTS`: **a company name is the whole input.** `/fcxo-proposal Talvora Analytics`
+is a complete instruction, and it is the normal one. The company's folder already holds
+the deal - the qualification, the buyer's own words, the scope agreed on the call, the
+start date, the price - so read it (Step 1) and write the proposal from it. Anything else
+in the argument (an engagement shape, a start date, a correction) is an override on top of
+the record, never a precondition for running. If the argument is empty, ask which company
+this proposal is for; that is the only question a full workspace ever justifies here.
 
-## Step 1 - Read the context (before asking anything)
+**This skill drafts. It never sends anything, under any wording of the request** - so
+"do not send" never has to be said, and a "send the proposal" request produces a saved
+draft plus a line telling the user it is theirs to send.
 
-Pull everything the workspace already knows:
+## Step 1 - Read the context (this is the job; do not ask for what the folder holds)
+
+Pull everything the workspace already knows. **Read the company's folder in full** - every
+file under it, not a sample - because that folder is the deal:
 
 - **Role** - `me/*- Profile.md` (`role:` frontmatter). Sets the lens and vocabulary of
   the proposal: a CFO proposal talks cash discipline and reporting, a CMO proposal talks
@@ -37,35 +46,49 @@ Pull everything the workspace already knows:
 - **Positioning** - `me/*- Positioning.md`. The only source for how the user describes
   their value. Use those words; never fabricate positioning (rule in
   `${CLAUDE_PLUGIN_ROOT}/references/copy-principles.md`).
-- **The lead** - `leads/<slug>/<Lead> - Lead.md` (glob `leads/**/*- Lead.md`) for the
-  named lead: the qualification verdict, the buyer's pains, and the engagement shape
-  `/fcxo-qualify` recommended.
-- **The lead's own history** - the lead folder's siblings `leads/<slug>/communications/`
-  and `leads/<slug>/meetings/`. The inbound message and the discovery call summary hold
-  the buyer's problem in the buyer's own words, which makes them the richest raw
-  material for the situation section. Read them before writing a line of it, and quote
-  the buyer's phrasing. Never paraphrase it into expert categories.
-- **Existing-client expansion** - when the proposal extends a current relationship, read
-  `clients/<slug>/<Client> - Profile.md`, the engagement files under
-  `clients/<slug>/engagements/**/*- Engagement.md`, and the same sibling folders
-  `clients/<slug>/communications/` and the engagement's `meetings/`: what was delivered,
-  what worked, what the new scope builds on.
+- **The company folder** - resolve it from the name in the argument: `Glob leads/**/*- Lead.md`
+  and `Glob clients/*/*- Profile.md` and match on the company name, the folder slug, or the
+  `domain:` frontmatter. `<company>` is `leads/<slug>/` before the contract and
+  `clients/<slug>/` after it.
+- **The record** - `<company>/<Lead> - Lead.md` (or `<Client> - Profile.md`): the
+  qualification verdict, the buyer's pains, and the engagement shape `/fcxo-qualify`
+  recommended.
+- **The whole history** - `Glob <company>/communications/*` and `Glob <company>/meetings/*`
+  and **read every file both globs return, oldest to newest**. The inbound messages and the
+  call summaries hold the buyer's problem in the buyer's own words, which makes them the
+  richest raw material for the situation section. Read them before writing a line of it,
+  and quote the buyer's phrasing. Never paraphrase it into expert categories.
+- **The newest message governs.** A deal moves, and the folder records it in order. Where a
+  later message contradicts an earlier call summary or lead note - a scope requirement
+  added, a next step withdrawn, a date fixed - **the later message wins, and the proposal
+  reflects the deal as it stands today**. Carry a requirement that arrived this morning into
+  the relevant section, and drop a next step the buyer has since cancelled. An action item
+  in a three-day-old call summary is not a mandate.
+- **Existing-client expansion** - when the proposal extends a current relationship, also
+  read the engagement files under `clients/<slug>/engagements/**/*- Engagement.md` and the
+  engagement's `meetings/`: what was delivered, what worked, what the new scope builds on.
 
 Never re-ask what a file already answers. With **no workspace**, run standalone: ask
 for the role, what they sell and at what price, the buyer's problem, and the intended
 scope, then return the proposal in chat.
 
-## Step 2 - Fill genuine gaps (one short batched question)
+## Step 2 - Fill genuine gaps (rarely, and only one batched question)
 
-If real gaps remain after reading - typically the start date, the term or duration,
-invoicing preferences, or a scope detail the lead file lacks - ask them **once, as a
-single batched question**. Do not interview the user section by section.
+A company folder that has been through qualification and a call answers everything a
+proposal needs, so the normal number of questions is **zero**. Write the proposal and stop.
+
+Ask only when a **load-bearing** fact exists in no file and cannot be derived from the
+offers - the price for a shape the offers do not cover, or a start date nobody has ever
+named. Then ask **once, as a single batched question**, and never interview the user
+section by section. A detail that is merely nice to have is not a reason to ask: state the
+assumption in the proposal's terms section and move on.
 
 ## Step 3 - Draft the proposal
 
-When the workspace holds `templates/Proposal.md`, that data template is the shape to
-write against: it lists the fields and sections a proposal has here, so follow its
-structure and fill it. The six sections below are the default when no template exists.
+Look for `templates/Proposal.md` under the workspace root yourself. When it is there, that
+data template is the shape to write against: it lists the fields and sections a proposal
+has in this practice, so follow its structure and fill it. The six sections below are the
+default when no template exists.
 
 Write clean markdown in this structure, aiming at roughly two pages:
 
@@ -119,10 +142,10 @@ Never leave a proposal loose beside a lead record.
 
 The user sends the proposal; this skill never sends anything. From here:
 
-- **Branded document** - when the user wants a client-facing, branded version, render
-  the finished proposal with `/fcxo-report`. It fills `design/Proposal.html` when that
-  layout exists and writes the `.html` sibling next to the markdown, in the same
-  `<company>/proposals/` folder. This skill owns the content; `/fcxo-report` owns the
+- **Branded document** - when the user wants a client-facing, branded version, run
+  `/fcxo-report <Company> proposal`. It finds this markdown, fills `design/Proposal.html`,
+  and writes the `.html` sibling next to it in the same `<company>/proposals/` folder,
+  leaving the content as written. This skill owns the content; `/fcxo-report` owns the
   rendering.
 - **On acceptance** - run `/fcxo-new-client` to create the client and engagement; the
   proposal's scope, price, and cadence carry straight into the engagement file.
@@ -134,6 +157,10 @@ The user sends the proposal; this skill never sends anything. From here:
 
 - Every price and rate traces to `me/*- Offers.md` or the user's words in this
   conversation; nothing invented.
+- The proposal matches the **latest** state of the thread: every requirement the buyer
+  added in their most recent message is in it, and nothing the buyer has withdrawn survives
+  in it.
+- Nothing was asked that the company folder already answers.
 - The situation section is in the buyer's language and could only describe this buyer.
 - The out-of-scope list exists and is specific to this deal.
 - One recommended option, one next step; a tier table only if real tiers exist.

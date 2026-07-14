@@ -98,6 +98,11 @@ so the workspace opens as a connected graph: `[[<Owner> - Profile]]`,
 `[[<Owner> - Positioning]]`, `[[<Owner> - Offers]]`, and
 `[[Practice Workspace - Integrations]]`.
 
+End the guide with two lines: run `/fcxo-help` to see every skill, where to start, and the
+order the skills run in; any skill also runs on its own, and one that cannot find the file
+it would have read asks for what it needs. Do not copy the sequences into the guide -
+`/fcxo-help` reads them from the plugin, so they stay current as the toolkit changes.
+
 ### `practice/Practice Workspace - Integrations.md`
 The second root file, beside the guide: the registry that says which connected tool serves
 which capability. This toolkit ships no connectors and no credentials. The user connects
@@ -199,7 +204,7 @@ updated: <YYYY-MM-DD>
 ```
 
 ### Concern folders (no README placeholders)
-`clients/`, `leads/`, `content/`, `finance/`, `research/`, `templates/`, `design/`,
+`clients/`, `leads/`, `content/`, `finance/`, `research/`, `sop/`, `templates/`, `design/`,
 `skills/`. Do **not** drop a per-folder `README.md` – generic basenames collide when the
 workspace opens in Obsidian, and the folder names are self-explanatory. The
 `Practice Workspace - Guide.md` already describes what each folder holds. A folder comes
@@ -216,6 +221,14 @@ reference: a company is a folder, `leads/<slug>/` before the contract and
 scaffold example company folders at init; `/fcxo-new-client` and the lead skills create
 them on first use, with the sub-folders coming into being as the first message, meeting,
 or proposal is written.
+
+`sop/` holds the procedures the user follows, written down, one file each
+(`sop/<Procedure> - SOP.md`), with each procedure's configuration beside it. `me/` is
+identity, so a procedure lives here and not there. `/fcxo-write-sop` writes the first one;
+say in the guide that a procedure in `sop/` can be **scheduled** (a scheduled task follows
+it, with nothing installed) or **built into a skill** (`/fcxo-learn-skill` writes
+`skills/<name>/SKILL.md`, which the user uploads to their Claude account and calls with
+`/`). A schedule runs it without them. A skill lets them run it whenever they want.
 
 ### `practice/templates/` (the data templates)
 Drop ready-to-copy templates: `Client - Profile.md`, `Engagement.md`, `Lead.md`,
@@ -271,9 +284,11 @@ plus `design/<Doc>.html`).
 
 Summarize what was created in plain language (where it is, what's inside, what's still
 `TODO`). List the root files by name, `Practice Workspace - Guide.md` and
-`Practice Workspace - Integrations.md`, alongside the `me/`, `templates/` and `design/`
-starters. Mention that the scaffolded files are wikilinked to each other (the guide and the
-`me/` files cross-link), so the workspace opens as a connected graph in Obsidian.
+`Practice Workspace - Integrations.md`, alongside the `me/`, `sop/`, `templates/` and
+`design/` starters. Say in one line what `sop/` is for: the procedures they follow, written
+down, one file each, which `/fcxo-write-sop` writes and which they then schedule or build
+into a skill. Mention that the scaffolded files are wikilinked to each other (the guide and
+the `me/` files cross-link), so the workspace opens as a connected graph in Obsidian.
 
 **Say one sentence about integrations.** The toolkit ships no connectors: the user connects
 email or a calendar in their own agent surface and writes the tool's name into the empty

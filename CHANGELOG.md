@@ -5,6 +5,61 @@ All notable changes to the FCxO Toolkit plugin.
 The format is based on [Keep a Changelog](https://keepachangelog.com/), and this
 project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.2.1] - 2026-07-14
+
+### Added
+
+- `fcxo-write-sop` – write down a procedure the user already runs by hand. It reads the
+  outputs of the last few runs, which are the specification of the output format, settles
+  the steps in a short interview, and saves `sop/<Procedure> - SOP.md` with whatever
+  configuration the procedure needs beside it.
+- `sop/` – the workspace folder for the procedures the owner follows, one file each. It
+  carries the toolkit's central loop: a procedure in `sop/` can be **scheduled** (a
+  scheduled task follows the SOP, with nothing installed) or **built into a skill**
+  (`/fcxo-learn-skill` writes `skills/<name>/SKILL.md`, which the user uploads and calls
+  with `/`). A schedule runs the procedure without them; a skill lets them run it whenever
+  they want. `me/` is identity, so a procedure and its configuration moved out of `me/` and
+  into `sop/`. `fcxo-init` scaffolds the folder.
+
+### Changed
+
+- **A skill is named for what it does.** The workspace contract now states it: the schedule
+  owns the cadence, so `lead-opportunity-scan` keeps its name whether it runs weekly, every
+  second week, or on demand. Capability and cadence are separate layers, and a name that
+  fixes the cadence is a restriction with no upside.
+- **The install path for a built skill is stated honestly.** `skills/<name>/` is where a
+  skill lives as **source**. It becomes usable by being uploaded to the user's Claude
+  account: compress the skill folder into a ZIP whose root is that folder, then
+  **Customize -> Skills -> "+" -> Create skill -> Upload a skill**. Cowork has no local
+  skills folder, and `.claude/skills/` is a Claude Code convention that does nothing there.
+  The toolkit is shell-free, so it builds no ZIP and installs nothing; the user does that
+  step.
+- **A company name is a complete argument.** The workspace contract now states the rule
+  every document skill follows: the user names the company and the thing they want, and
+  the skill resolves the rest - the company folder, the whole history inside it, the data
+  template, the design template, the save path, the filename. A skill that asks for what
+  the workspace already states has failed at the job the workspace exists for.
+  (`references/practice-workspace.md`.)
+- `fcxo-report` – **render-only is the default.** `/fcxo-report <Company> proposal` now
+  resolves the company folder, finds the newest matching document inside it, renders it in
+  `design/<Doc>.html` with the content unchanged, and saves the self-contained `.html`
+  beside the markdown. Branded, self-contained, and beside-the-markdown stop being things
+  the user asks for. Composing a report from engagement material is what it does when no
+  source document exists.
+- `fcxo-proposal` – a bare company name is the whole input. It reads every file in the
+  company's `communications/` and `meetings/` in date order, and **the newest message
+  governs**: a requirement the buyer added this morning lands in the proposal, and a next
+  step the buyer has since withdrawn does not survive in it. A qualified folder answers
+  everything a proposal needs, so the normal number of questions is zero. Draft-only is
+  unconditional, so "do not send" never has to be said.
+- `fcxo-log-message` – a pasted message is a complete instruction. The company is resolved
+  from the sender's email domain first, then the correspondent, then the company name; a
+  `Re:` subject continues the thread that carries the same subject without it.
+- `fcxo-learn-skill` – a file path is a complete input. It reads the procedure's
+  configuration and its previous dated runs (the specification of the output format) on its
+  own, derives the skill name from the procedure's title, and stages the skill at
+  `skills/<name>/SKILL.md` in the workspace by default rather than asking where it goes.
+
 ## [0.2.0] - 2026-07-14
 
 ### Added
@@ -170,6 +225,7 @@ same in Claude Code and Claude Cowork, with nothing to install.
   status updates and deliverables feed the renewal review; the renewal review feeds
   case studies; case studies feed proposals and posts.
 
+[0.2.1]: https://github.com/ainova-systems/fcxo-toolkit/releases/tag/v0.2.1
 [0.2.0]: https://github.com/ainova-systems/fcxo-toolkit/releases/tag/v0.2.0
 [0.1.1]: https://github.com/ainova-systems/fcxo-toolkit/releases/tag/v0.1.1
 [0.1.0]: https://github.com/ainova-systems/fcxo-toolkit/releases/tag/v0.1.0

@@ -73,7 +73,18 @@ structure is fixed; only the brand/design layer comes from DESIGN.md:
    with no stored `data:` URL, ask for an SVG or a pre-encoded `data:` URL, or fall back to
    wordmark-only.
 4. **Fill the template.** Fill every `{{PLACEHOLDER}}` and emit one `<tr>` per line item at
-   `<!-- @LINE_ITEMS -->`. Omit the VAT row entirely if VAT is off.
+   `<!-- @LINE_ITEMS -->`. Omit the VAT row entirely if VAT is off. Three regions are
+   conditional, and every one of them lands on the client's copy:
+   - **Status chip (`<!-- @STATUS -->`).** Emit it only when the companion note's status is
+     `sent` or `paid` (`.chip--sent` / `.chip--paid`). A fresh invoice is written at status
+     `draft` in step 4, and the `.html` is not re-rendered when the status later flips, so a
+     chip emitted at draft would print DRAFT on the copy the client receives. While the
+     status is `draft`, omit the whole block.
+   - **Notes (`<!-- @NOTES -->`).** Emit the section, its label included, only when a note is
+     genuinely client-facing. The markdown `## Notes` is normally an internal log (payment
+     received, a link to a pipeline review), so the usual render omits the section; keeping
+     the label would print an empty tinted box on the invoice.
+   - **VAT row (`<!-- @VAT_ROW -->`).** As above: omit while `invoice.vat.charge` is false.
 
 Render the payment account / IBAN **compact, with no spaces** (`LT001234…`, not
 `LT00 1234 …`) so it copies cleanly into a bank transfer.
@@ -94,6 +105,8 @@ and the client (`[[<Client> - Profile]]`); keep these links out of the client-fa
 - Never invent a tax id, IBAN, or VAT rate – use the brand file or ask.
 - The skill prepares the invoice; the user opens, prints, and sends it. When the user
   says they sent it or got paid, update the companion note's `status:` (`draft` →
-  `sent` → `paid`) so the pipeline review reflects reality.
+  `sent` → `paid`) so the pipeline review reflects reality. That does not touch the
+  `.html`; re-render it only if the user wants the status chip on a copy they are about
+  to re-send.
 - Keep the invoice one page. If line items overflow, the browser paginates cleanly via
   the print CSS.

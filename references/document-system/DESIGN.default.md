@@ -193,8 +193,14 @@ align down a column.
   (top, left/right, bottom).
 - On screen the sheet is centred on a soft grey backdrop (`#eceef1`) with a light
   drop shadow, and a small no-print toolbar carries a Print button.
-- In print the sheet becomes the page: `@page { size: A4; margin: 14mm; }`, the
-  screen chrome and shadow are removed, and links print as plain ink.
+- In print the sheet becomes the page: `@page { size: A4; margin: 14mm; }` (from
+  `page.size` and `page.print-margin`; the templates do not restate it), the screen
+  chrome and shadow are removed, and links print as plain ink.
+- The print block also carries
+  `.sheet, .sheet * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }`.
+  Chrome's print dialog has "Background graphics" off by default, and without this
+  every fill on the sheet - zebra ledger rows, status chip, callouts - prints white.
+  Delivery is a printed PDF, so the brand depends on this line.
 - Paragraphs cap their measure at roughly 74 characters for readable lines.
 - Keep `orphans: 3` and `widows: 3` so a page break never strands one or two lines.
 - Delivery is print-from-browser: open the HTML, Ctrl/Cmd-P, Save as PDF.

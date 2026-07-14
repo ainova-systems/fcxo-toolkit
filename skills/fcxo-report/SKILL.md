@@ -1,32 +1,61 @@
 ---
 name: fcxo-report
-description: "Compose a client-ready report from engagement material and render it as a branded document the user prints to PDF. Use when the user wants a client report, an assessment report, a branded report, to render a deliverable as a document, or to turn a memo into a client PDF."
-argument-hint: "<topic or source deliverable> [client/engagement] [language]"
+description: "Render an existing document (proposal, report, deliverable) as a branded, self-contained HTML file beside its markdown, or compose the report first when none exists. Use when the user wants a client report, an assessment report, a branded document, to render a proposal or deliverable, or to turn a memo into a client PDF."
+argument-hint: "<company> <document type> | <topic or source file> [language]"
 allowed-tools: Read, Write, Edit, Glob
 ---
 
 # fcxo-report - the deliverable, composed and rendered
 
-Produce the client-facing deliverable at the end of an engagement phase: compose a
-report from the material the engagement already holds, then render it on the user's
-document brand. Two steps in one skill: **compose** (clean markdown, the durable record
-in the workspace) and **render** (one self-contained `.html` file the user opens in a
-browser and prints, Ctrl/Cmd-P, Save as PDF). No PDF engine, no installed fonts, no
-external assets.
+Turn a document into the client-facing artifact: one self-contained `.html` file on the
+user's document brand, which they open in a browser and print (Ctrl/Cmd-P, Save as PDF).
+No PDF engine, no installed fonts, no external assets.
+
+Two modes, and Step 0 decides which one you are in. **Render-only** is the common one: the
+document already exists (a proposal, a decision report), so it is rendered exactly as
+written. **Compose** is for when the deliverable has not been written yet: build the
+markdown from the engagement's material first, save it as the durable record, then render
+it the same way.
 
 Read `${CLAUDE_PLUGIN_ROOT}/references/practice-workspace.md` (where data lives) and
 `${CLAUDE_PLUGIN_ROOT}/references/document-system/README.md` (the render contract).
 
-## Step 1 - Gather the material
+## Step 0 - Resolve what you are rendering (do this before anything else)
+
+`$ARGUMENTS` is normally just a company and a document type: `Talvora Analytics proposal`,
+`Orlend Labs renewal review`, `Halverd Robotics report`. That is enough. Resolve the rest
+yourself and ask nothing.
+
+1. **The company.** `Glob leads/**/*- Lead.md` and `Glob clients/*/*- Profile.md`, and
+   match the name in the argument against the company names, the folder slugs, and the
+   `domain:` frontmatter. That match gives you `<company>` = `leads/<slug>/` or
+   `clients/<slug>/`.
+2. **The document.** The document-type word in the argument tells you where to look inside
+   that folder: a **proposal** or SOW lives in `<company>/proposals/*.md`; a **report**,
+   **assessment**, **decision report**, **review**, or any other deliverable lives in
+   `clients/<slug>/engagements/*/deliverables/*.md`. `Glob` that folder and take the
+   **most recent by date prefix**; when two carry the same date, take the one whose name
+   matches the document type. A path or filename in the argument overrides all of this:
+   use the file named.
+3. **Then branch, and this is the default:**
+   - **A source markdown exists → render-only.** The content is already written and owned
+     by the skill that wrote it (`/fcxo-proposal`, `/fcxo-decision-report`). **Skip Step 2
+     entirely. Keep the content exactly as written**: no rewriting, no reordering, no
+     "improving" a heading, no added section, no dropped sentence. Go straight to Step 3,
+     render, and save the `.html` sibling. Ask nothing.
+   - **No source markdown exists → compose it** (Step 1, Step 2), then render.
+
+Branded, self-contained, and saved beside the markdown is what this skill always does;
+none of that needs to be asked for.
+
+## Step 1 - Gather the material (compose mode only)
 
 - **Workspace root** - the folder holding `me/`. Pull the user's **role** from
   `me/*- Profile.md`; it sets the lens for the whole report.
 - **Sources** - whatever the engagement holds under `clients/<slug>/engagements/<id>/`:
   a decision memo from `/fcxo-decision-report`, survey findings from
   `/fcxo-research-form`, call summaries in `meetings/`, working notes, and whatever
-  findings the user pastes in this conversation. `$ARGUMENTS` names the topic or the
-  source file, optionally the client/engagement and a language (default: match the
-  user).
+  findings the user pastes in this conversation. The language defaults to the user's.
 - **Standalone** (no workspace) - compose the report in chat from what the user
   provides, and offer to render once a workspace exists: the render needs the brand
   file (`design/DESIGN.md` or the plugin default) and a place to save.
@@ -34,7 +63,7 @@ Read `${CLAUDE_PLUGIN_ROOT}/references/practice-workspace.md` (where data lives)
 Ask one short batched question only for what is genuinely missing (at minimum: what was
 reviewed and for whom).
 
-## Step 2 - Compose (markdown, the durable record)
+## Step 2 - Compose (markdown, the durable record; compose mode only)
 
 The report is a senior deliverable; hold the same bar as `/fcxo-decision-report`:
 
@@ -63,11 +92,13 @@ user (once) they can run `/fcxo-brand` to set their color, logo, and details.
 
 **Layout** - the design template is paired to the document type by basename, so a report
 renders in `design/Report.html`, a proposal in `design/Proposal.html`, an invoice in
-`design/Invoice.html`. Look in the workspace for `design/<Doc>.html` for the type you are
-rendering and use it as the HTML layout. The user designs a layout once, drops it in
-`design/` (`/fcxo-setup-template` builds the pair from a design sample), and every future
-document of that type comes out in it. When the workspace holds no design template for
-this type, fall back to `${CLAUDE_PLUGIN_ROOT}/references/document-system/report.html`.
+`design/Invoice.html`. The document type is the one you resolved in Step 0 (and it is
+confirmed by the source's `type:` frontmatter and the folder it sits in), so pick
+`design/<Doc>.html` for that type yourself: a proposal renders in `design/Proposal.html`
+without anyone naming the file. The user designs a layout once, drops it in `design/`
+(`/fcxo-setup-template` builds the pair from a design sample), and every future document
+of that type comes out in it. When the workspace holds no design template for this type,
+fall back to `${CLAUDE_PLUGIN_ROOT}/references/document-system/report.html`.
 
 Fill the chosen layout per the render contract in the document-system README. The
 template HTML structure is fixed; only the brand/design layer comes from DESIGN.md:
@@ -92,7 +123,14 @@ template HTML structure is fixed; only the brand/design layer comes from DESIGN.
    `.mark` (wordmark-only). Never shell out to encode an image.
 4. **Fill the template.** Fill every `{{PLACEHOLDER}}` and every `<!-- @MARKER -->` the
    chosen layout declares; a workspace design template uses the same injection markers,
-   so read it and fill what it asks for. In the plugin template that is `{{BRAND_NAME}}`,
+   so read it and fill what it asks for. A workspace layout carries the placeholders of
+   its own document type (a proposal layout asks for the situation, the scope, the start
+   date, the investment, the terms, the next step), and each one is filled from the
+   matching section of the source markdown, **word for word in render-only mode**. Where
+   the layout wants a value the markdown states in prose (a start date, a figure), lift it
+   from that prose; never restate it in your own words and never compute a value the
+   document does not carry. A placeholder with nothing behind it in the source is dropped
+   with its block, never filled with an invention. In the plugin template that is `{{BRAND_NAME}}`,
    `{{DOC_TYPE}}`, `{{REPORT_TITLE}}`, `{{CLIENT_NAME}}`, `{{AUTHOR_LINE}}`,
    `{{REPORT_DATE}}`, `{{EXEC_SUMMARY}}`, `{{FOOTER_LEGAL}}`. Emit one
    `<section class="report-section">` per report section at `<!-- @SECTIONS -->`:
@@ -107,8 +145,8 @@ the HTML - it is the client-facing file.
 
 ## Step 4 - Save and deliver
 
-The rendered `.html` is always a **sibling of its markdown**, so where it lands follows
-what the document is.
+The rendered `.html` is always a **sibling of its markdown**: same folder, same basename,
+`.html` extension. That rule alone decides the path, so it never needs to be given.
 
 **A proposal** - the source markdown carries frontmatter `type: proposal`, or it sits in
 a `proposals/` folder. `/fcxo-proposal` owns that markdown; this skill only adds the
@@ -138,15 +176,18 @@ to the client, update the markdown note's `status:` (`draft` → `sent`).
 ## Where this sits (hand-offs)
 
 - `/fcxo-decision-report` and `/fcxo-proposal` own their content and hand the
-  rendering to this skill: re-render their finished markdown without rewriting it
-  (light restructuring into the report sections is fine; the substance is theirs).
+  rendering to this skill. Their finished markdown is rendered as written; the substance
+  is theirs and this skill leaves it alone.
 - `/fcxo-brand` owns the look. Never adjust tokens or recipes here; send the user
   there for brand changes.
 
 ## Quality gate (before delivering)
 
-- The executive summary alone delivers the verdict and the top recommendation.
-- Every finding cites its evidence; every assumption is marked as one.
-- Recommendations carry effort and impact and stand in one clear priority order.
+- **Render-only mode**: every sentence in the `.html` appears in the source markdown, and
+  the source markdown is byte-for-byte what it was before the run.
+- **Compose mode**: the executive summary alone delivers the verdict and the top
+  recommendation; every finding cites its evidence; every assumption is marked as one;
+  recommendations carry effort and impact and stand in one clear priority order.
 - The HTML is one self-contained file: full token set emitted, no external assets, no
   wikilinks, prints clean on A4.
+- The `.html` sits beside its markdown, under the same basename.

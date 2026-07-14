@@ -56,14 +56,17 @@ practice/
 ├── content/                      # LinkedIn / brand material
 ├── finance/                      # invoices, tracking
 ├── research/                     # reusable research, dated skill outputs
+├── sop/                          # the procedures you follow: <Procedure> - SOP.md
 ├── templates/                    # what fields a document type has: <Doc>.md
 ├── design/                       # how a document type looks: DESIGN.md + <Doc>.html
-└── skills/<name>/SKILL.md        # the skills you build yourself
+└── skills/<name>/SKILL.md        # a skill you built, as source; you upload it to your Claude account
 ```
 
 **One company, one folder.** Every company you deal with gets a folder, and it has the same shape whether the deal is won or not. Its messages, meetings, and proposals live beside its record. Before there is a contract the folder sits in `leads/<slug>/`; once you win the deal the same folder moves to `clients/<slug>/` and gains `engagements/`. Nothing is renamed and no link breaks, because every file inside was already named for the company.
 
 Every filename is self-identifying and unique across the workspace, so the folder opens cleanly as an Obsidian vault (no two notes share a basename). Owner files are prefixed with your name, company files with the company name, leads end with `- Lead`, and dated outputs lead with the date. Skills find a file by its frontmatter `type:` and filename suffix, never by a fixed generic name. `templates/` and `design/` are the one exception: their files are named for the document type they define, so `templates/Proposal.md` and `design/Proposal.html` pair up by basename.
+
+**A procedure you follow is one file in `sop/`.** `/fcxo-write-sop` writes it from the way you already run the job by hand, reading the outputs of your past runs, which are the specification of what the next one has to produce. From there a procedure can be **scheduled** (a scheduled task follows the SOP, with nothing installed) or **built into a skill** (`/fcxo-learn-skill` writes `skills/<name>/SKILL.md`, which you upload to your Claude account and call with `/`). A schedule runs the procedure without you. A skill lets you run it whenever you want.
 
 Light, optional frontmatter (e.g. `type:`, `role:`, `status:`) helps both you and the skills read a note at a glance. Nothing is enforced or validated – it is just structure.
 
@@ -85,7 +88,8 @@ What your workspace holds is the registry: `Practice Workspace - Integrations.md
 | `/fcxo-init` | First-time setup. Creates the practice workspace, records your role and billing details, optionally sets up Obsidian. |
 | `/fcxo-new-client` | Adds a new client and/or engagement to your workspace. |
 | `/fcxo-brainstorm` | Grills you on any plan, decision, or topic – one question at a time, every answer checkpointed to a capture file so nothing is lost. Onboarding hands off here to extract your positioning and offers. |
-| `/fcxo-learn-skill` | Builds a new reusable skill from anything you bring – a goal, a sample output, an SOP, a reference skill, a URL, or the task you just did. It researches how others do it, finalizes scope with a short interview, and writes a standards-compliant skill (on-demand or scheduled), staged for your review. |
+| `/fcxo-write-sop` | Writes down a procedure you already run by hand. It reads your past outputs of it, which fix the output format, and saves `sop/<Procedure> - SOP.md`. From there you schedule it, or build a skill from it. |
+| `/fcxo-learn-skill` | Builds a reusable skill from anything you bring – an SOP, a goal, a sample output, a reference skill, a URL, or the task you just did. It researches how others do it, finalizes scope with a short interview, and writes `skills/<name>/SKILL.md` in your workspace. You compress that folder and upload it to your Claude account (Customize -> Skills -> "+" -> Create skill -> Upload a skill), and call it with `/`. |
 
 **Find & win clients**
 
@@ -96,7 +100,7 @@ What your workspace holds is the registry: `Practice Workspace - Integrations.md
 | `/fcxo-qualify` | Qualifies a lead: fit, urgency, budget signal, recommended engagement shape, go/no-go. |
 | `/fcxo-call-prep` | Builds a one-page prep before a discovery, sales, or client call: objective, agenda, questions, the next step to land. |
 | `/fcxo-call-summary` | Turns call notes or a transcript into action items, a follow-up email, and an internal note. |
-| `/fcxo-proposal` | Drafts the proposal / SOW that converts a qualified lead: scope with clear edges, one price anchored to your offers, one next step. Draft only. |
+| `/fcxo-proposal` | Drafts the proposal / SOW that converts a qualified lead: scope with clear edges, one price anchored to your offers, one next step. Name the company and it reads the whole folder, down to the message that arrived this morning. Draft only. |
 
 **Communicate**
 
@@ -114,7 +118,7 @@ What your workspace holds is the registry: `Practice Workspace - Integrations.md
 | `/fcxo-status-update` | Drafts the periodic client status update from the workspace record, plus a private scope-creep check. The retention artifact. |
 | `/fcxo-decision-report` | Builds a board-ready decision memo: situation, options, recommendation, risks – in your role's lens. |
 | `/fcxo-research-form` | Builds a short, typed stakeholder questionnaire as a platform-neutral form spec, then synthesizes the responses into findings. |
-| `/fcxo-report` | Composes a client-ready report from engagement material and renders it branded: one self-contained HTML file you print to PDF. |
+| `/fcxo-report` | Renders a document on your brand: name the company and the document (`Talvora Analytics proposal`) and it finds the file, keeps the content as written, and saves one self-contained HTML file beside it, which you print to PDF. Composes the report first when it does not exist yet. |
 | `/fcxo-renewal-review` | Prepares the renewal / QBR checkpoint: evidence-backed results vs plan for the client, plus an honest internal read on whether to renew. |
 
 **Market yourself**
@@ -148,6 +152,19 @@ document) and every document matches. Until you do, documents use a clean defaul
 ### Planned (v2)
 
 `fcxo-assessment` – a structured diagnostic composing `fcxo-research-form` and `fcxo-report`, coming once both building blocks have seen real use.
+
+## Workflows
+
+The table above says what each skill does. The order they run in, and the file each one
+leaves behind for the next, is in [`references/workflows.md`](references/workflows.md):
+setting up once, a new company appearing, a conversation running, a deal converting, an
+engagement running, the practice itself, and the work that repeats (write the procedure,
+then schedule it or build a skill from it).
+
+You can run any skill on its own and skip whole sequences. The order matters because the
+files accumulate: a call summary feeds the status update, the updates feed the renewal
+review, the review feeds the case study, and the case study feeds the next proposal. In a
+session, `/fcxo-help` reads that file and answers "where do I start".
 
 ## Design principles
 

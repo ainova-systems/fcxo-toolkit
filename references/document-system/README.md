@@ -23,8 +23,11 @@ Three pieces, each with one job:
 A document skill writes markdown against the **data** template. A render is then the
 **tokens and recipes injected into the layout of that document's type**, matched by
 basename, falling back to the plugin default layout in this folder when the workspace has
-none. So the user designs a document in Claude, hands it to `/fcxo-setup-template`, and
-every future document of that type comes out in that layout with their brand applied.
+none. `/fcxo-setup-template` completes the pair from whichever half exists: a layout the
+user designed in Claude gives it the data template, and an existing `templates/<Doc>.md`
+gives it the layout. It reads a half that is already on disk as the spec for the other
+one and never regenerates it. Once the pair is in place, every future document of that
+type comes out in that layout with the user's brand applied.
 
 `/fcxo-brand` changes the tokens, which restyles every layout at once. `/fcxo-setup-template`
 installs a layout, which changes one document type. The two stay independent.
