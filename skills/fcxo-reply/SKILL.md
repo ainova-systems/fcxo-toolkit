@@ -17,7 +17,7 @@ the wiki convention, and the draft-only rule.
 
 - `Glob clients/<slug>/communications/*`, find the thread, and **read every prior
   message in it** (logged by `fcxo-log-message`). Tone, open questions, and who said
-  what come from the actual thread, not a reconstruction.
+  what come from the actual thread.
 - Identify the **active correspondent** you are answering. The reply belongs to their
   thread; it does not become a separate message to a third party who is not in it.
 

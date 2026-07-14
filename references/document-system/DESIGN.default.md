@@ -70,7 +70,7 @@ page:
 logo:
   size: "34px"            # -> --logo-size
   src: null               # inline <svg> markup OR a data: URL; null = wordmark-only.
-                          # Store the logo file alongside this DESIGN.md in me/brand/.
+                          # Store the logo file alongside this DESIGN.md in design/.
 
 # ---- Content / billing (not style tokens) ----------------------------------
 brandName: "Your Practice"   # fills the {{BRAND_NAME}} wordmark in the lockup
@@ -127,7 +127,7 @@ component CSS and regenerate it only when this file changes.
 The identity is a quiet, precise, document-grade brand: a single accent color on
 a clean white sheet, generous margins, tabular numbers, and uppercase micro-labels
 that orient the eye without shouting. It should read like a well-kept ledger from
-a serious practice, not a marketing flyer.
+a serious practice.
 
 Voice rules for anything rendered through this system:
 
@@ -328,7 +328,7 @@ typography table above.
   (34px) square.
 - Store it shell-free: prefer inline `<svg>` markup (embedded directly into the
   document), or a `data:` URL for a raster. Keep the file alongside this DESIGN.md
-  in `me/brand/`. With no logo, the lockup is wordmark-only.
+  in `design/`. With no logo, the lockup is wordmark-only.
 - Never recolor, stretch, distort, or add effects to the logo. It scales within its
   square box with `object-fit: contain`.
 

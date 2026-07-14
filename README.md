@@ -2,7 +2,7 @@
 
 An operational toolkit for **fractional executives** – fractional CEO, CMO, CSO, CTO, COO, CFO. Every fractional runs the same business under the hood: find clients, win them, deliver decision-level work, market yourself, and run your own back-office. This plugin turns those recurring jobs into skills you run with `/`.
 
-It is **role-aware** (you set your role once, every skill adapts its lens), **works standalone** (web research plus what you tell it – no required integrations), and gets sharper when you connect your own tools (CRM, email, calendar, LinkedIn). Every skill is **shell-free** – it uses file tools only, so it runs the same in Claude Code and in Claude Cowork, with nothing to install.
+It is **role-aware** (you set your role once, every skill adapts its lens), **works standalone** (web research plus what you tell it – no required integrations), and gets sharper when you connect your own tools (CRM, email, calendar, LinkedIn). Every skill is **shell-free**: it runs on file tools, web search, and the connectors your agent surface already gives you. There are no scripts and no shell commands, so it behaves the same in Claude Code and in Claude Cowork, with nothing to install.
 
 ## Install
 
@@ -31,31 +31,49 @@ If you have no workspace, the skills still run – they just ask for the context
 
 ```
 practice/
-├── Practice Workspace - Guide.md   # how to use this workspace
+├── Practice Workspace - Guide.md          # how to use this workspace
+├── Practice Workspace - Integrations.md   # which connected tool serves which capability
 ├── me/
-│   ├── <Owner> - Profile.md         # name, role, contacts, billing details
-│   ├── <Owner> - Positioning.md     # how you describe what you do
-│   └── <Owner> - Offers.md          # services, tiers, rates
-├── clients/
-│   └── <client-slug>/
-│       ├── <Client> - Profile.md
-│       ├── engagements/<id>/
-│       │   ├── <Client> - <Descriptor> Engagement.md   # scope / price / status
-│       │   ├── deliverables/
-│       │   ├── meetings/
-│       │   └── notes/
-│       ├── communications/
-│       └── documents/              # contract / SOW
-├── leads/                          # one `<Lead> - Lead.md` per lead – your pipeline
-├── content/                        # LinkedIn / brand material
-├── finance/                        # invoices, tracking
-├── research/                       # reusable research
-└── templates/                      # note templates
+│   ├── <Owner> - Profile.md      # name, role, contacts, billing details
+│   ├── <Owner> - Positioning.md  # how you describe what you do
+│   ├── <Owner> - Offers.md       # services, tiers, rates
+│   └── <Owner> - Voice.md        # how your posts sound
+├── leads/<slug>/                 # a company before the contract
+│   ├── <Lead> - Lead.md          # the record: source, fit, qualification, next step
+│   ├── communications/           # messages and reply drafts, one thread per file
+│   ├── meetings/                 # call prep, call summaries
+│   └── proposals/                # proposals and SOWs (+ the rendered .html sibling)
+├── clients/<slug>/               # the same company after the contract
+│   ├── <Client> - Profile.md
+│   ├── engagements/<id>/
+│   │   ├── <Client> - <Descriptor> Engagement.md   # scope / price / status
+│   │   ├── deliverables/
+│   │   ├── meetings/
+│   │   └── notes/
+│   ├── communications/
+│   ├── proposals/                # expansion / renewal proposals
+│   └── documents/                # signed contract / SOW
+├── content/                      # LinkedIn / brand material
+├── finance/                      # invoices, tracking
+├── research/                     # reusable research, dated skill outputs
+├── templates/                    # what fields a document type has: <Doc>.md
+├── design/                       # how a document type looks: DESIGN.md + <Doc>.html
+└── skills/<name>/SKILL.md        # the skills you build yourself
 ```
 
-Every filename is self-identifying and unique across the workspace, so the folder opens cleanly as an Obsidian vault (no two notes share a basename). Owner files are prefixed with your name, client files with the client name, leads end with `- Lead`, and dated outputs lead with the date. Skills find a file by its frontmatter `type:` and filename suffix, never by a fixed generic name.
+**One company, one folder.** Every company you deal with gets a folder, and it has the same shape whether the deal is won or not. Its messages, meetings, and proposals live beside its record. Before there is a contract the folder sits in `leads/<slug>/`; once you win the deal the same folder moves to `clients/<slug>/` and gains `engagements/`. Nothing is renamed and no link breaks, because every file inside was already named for the company.
+
+Every filename is self-identifying and unique across the workspace, so the folder opens cleanly as an Obsidian vault (no two notes share a basename). Owner files are prefixed with your name, company files with the company name, leads end with `- Lead`, and dated outputs lead with the date. Skills find a file by its frontmatter `type:` and filename suffix, never by a fixed generic name. `templates/` and `design/` are the one exception: their files are named for the document type they define, so `templates/Proposal.md` and `design/Proposal.html` pair up by basename.
 
 Light, optional frontmatter (e.g. `type:`, `role:`, `status:`) helps both you and the skills read a note at a glance. Nothing is enforced or validated – it is just structure.
+
+## Connected tools
+
+The toolkit ships **no connectors and asks for no credentials**. There is no API key to paste and no OAuth flow to sit through. It reaches your email, calendar, or drive through the connectors your agent surface already gives you – the ones built into Claude Cowork, or installed from its marketplace. You connect a tool once, in the surface, and it stays yours.
+
+What your workspace holds is the registry: `Practice Workspace - Integrations.md`, a plain table saying which connected tool serves which capability and what a skill may do with it. A skill that needs a connected tool reads that file to learn which one you have. Switch calendars and you change one row in one markdown file, and every skill follows. When a capability has no row, the skill asks you for the few facts it needs and carries on.
+
+**The write boundary is narrow.** A guest-free hold on your own calendar is the only thing any skill writes to a connected tool. Every other connected tool is read-only: a skill reads from it and drafts into your workspace. Nothing sends, invites, notifies, or shares.
 
 ## Skills
 
@@ -86,6 +104,7 @@ Light, optional frontmatter (e.g. `type:`, `role:`, `status:`) helps both you an
 |-------|--------------|
 | `/fcxo-log-message` | Logs an incoming or sent client message into its thread, building the relationship timeline. One thread, one file. |
 | `/fcxo-reply` | Drafts one reply inside an existing thread, mirroring its tone and language. Draft only – you send it. |
+| `/fcxo-book-call` | Turns "we should talk" into a held slot: reads your calendar, holds the time on your own calendar with no guests, and drafts the reply that proposes it. You send the reply, and you send the invitation once the time is agreed. |
 
 **Deliver & retain**
 
@@ -117,6 +136,7 @@ Light, optional frontmatter (e.g. `type:`, `role:`, `status:`) helps both you an
 | Skill | What it does |
 |-------|--------------|
 | `/fcxo-brand` | Sets up or adjusts your document look – accent color, logo, fonts, billing details – stored once and reused by every document. |
+| `/fcxo-setup-template` | Installs a document layout you designed as a reusable type: it writes the `templates/<Doc>.md` and `design/<Doc>.html` pair, wired to your brand, so every future document of that type comes out in that layout. |
 
 Client-facing documents (invoice and report today; proposals render through the same
 system) share one small design system stored in your workspace. A finished document is
@@ -131,9 +151,9 @@ document) and every document matches. Until you do, documents use a clean defaul
 
 ## Design principles
 
-- **Draft, never send.** Any outward message (email, DM, outreach) is delivered as a draft for you to review and send yourself.
-- **Your framing first.** Positioning and voice come from your own `me/*- Positioning.md`, not from a generic template.
-- **Standalone-first.** No connector is required. Connect your tools to make skills richer, not to make them work.
+- **Draft, never send.** Any outward message (email, DM, outreach, proposal, status update) is delivered as a draft for you to review and send yourself. This holds for connected tools too: a skill reads from them and drafts into your workspace. A guest-free hold on your own calendar is the one write any skill makes, because adding a guest makes the calendar service email that person an invitation you did not send.
+- **Your framing first.** Positioning and voice come from your own `me/*- Positioning.md`, in the words you already use to describe what you do.
+- **Standalone-first.** No connector is required. Every skill runs on web research and what you tell it; connecting your own tools makes the result richer.
 - **Lean.** A small set of skills that each earn their place, over a large set of half-baked ones.
 
 ## Data handling

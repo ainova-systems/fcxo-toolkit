@@ -44,7 +44,7 @@ The workspace already holds the week - read it before asking the user anything:
 
 Then ask the user **only for what the files cannot know**: progress on items with no
 written trace, hours spent if the engagement tracks them, anything that happened off
-the record. One compact question list, not an interview.
+the record. One compact question list.
 
 ## Scope-creep check (to the user, never in the client draft)
 
@@ -72,7 +72,7 @@ between meetings. Match the client's language and formality from the thread hist
 6. **Hours / budget note** (only if the engagement tracks them) - one line of period
    usage against the arrangement.
 
-Skip a section that is genuinely empty rather than padding it.
+Skip a section that is genuinely empty. Never pad it.
 
 ## Save
 
@@ -104,7 +104,7 @@ scheduled task) with a prompt like "run /fcxo-status-update for <client>".
 
 Before delivering, check:
 
-- Every "done" item ties to an engagement goal, not to raw activity.
+- Every "done" item ties to an engagement goal.
 - Everything promised in the previous update is accounted for: done, moved, or explained.
 - Asks are explicit, each with an owner.
 - Tone, language, and formality match the thread history.

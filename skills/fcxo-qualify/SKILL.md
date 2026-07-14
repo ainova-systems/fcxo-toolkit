@@ -20,8 +20,11 @@ a CFO weighs financial control. Judge fit against what this role actually solves
 
 ## Input
 
-`$ARGUMENTS`: an existing `leads/*- Lead.md`, pasted profile text, or a URL. If empty,
-ask for the lead. Read any existing lead file or research the target briefly to fill gaps.
+`$ARGUMENTS`: an existing lead (`leads/**/*- Lead.md`), pasted profile text, or a URL. If
+empty, ask for the lead. Read any existing lead file or research the target briefly to
+fill gaps. A lead lives in its own folder, so its history is right beside the record:
+skim `leads/<slug>/communications/`, `meetings/`, and `proposals/` for anything the lead
+file has not absorbed yet.
 
 ## Qualify on four axes
 
@@ -45,8 +48,11 @@ Score each plainly (strong / mixed / weak) with a one-line reason:
 
 ## Save
 
-For a **go**: save or update `leads/<Lead> - Lead.md` with the verdict and recommended
-shape, frontmatter `type: lead`, `status: new`, `updated: <date>`. Per the wiki
+For a **go**: save or update the lead record at `leads/<slug>/<Lead> - Lead.md` with the
+verdict and recommended shape, frontmatter `type: lead`, `status: new`,
+`updated: <date>`. One company, one folder: if the lead has no folder yet, create it by
+writing the record into `leads/<slug>/`, so its messages, calls, and proposal have a home
+from the start. Per the wiki
 convention in `practice-workspace.md`, the lead file links the referrer when known
 (`[[<Client> - Profile]]` or the person who referred it) and `[[<Owner> - Offers]]` for
 the recommended engagement shape. For a **no-go**: report in chat, no file.

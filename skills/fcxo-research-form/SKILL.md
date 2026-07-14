@@ -52,8 +52,8 @@ deliverables - and never ask respondents for facts the artifacts already hold.
 - **Short**: respondents finish in ~10 minutes (roughly 10-15 questions).
 - **Typed**: every question is one of `scale 1-5`, `single choice`, `multi choice`,
   `short text`. Choice questions carry their options.
-- **Neutral**: non-leading phrasing ("How would you rate X" rather than "How much does
-  X hurt you").
+- **Neutral**: non-leading phrasing ("How would you rate X"). Never load the question
+  ("How much does X hurt you").
 - **Ordered easy to sensitive**: warm-up and context first, friction and judgment
   later.
 - **One open closer**: "What did we not ask that we should have?" (short text).
@@ -89,7 +89,7 @@ Aggregate honestly:
 
 - **Counts first** - how many responded, against how many were invited if known.
 - **Distributions per scaled question** - the spread, never only an average; a
-  1-and-5 split is a finding, not a 3.
+  1-and-5 split is a finding, and its average of 3 hides it.
 - **Free-text themes** - the recurring themes, quoted verbatim where the wording
   matters.
 - **Splits and outliers flagged** - if leadership and the team disagree, or one

@@ -11,14 +11,19 @@ Give the user a clear, prioritized picture of their week across new business and
 clients. A solo fractional has no sales team; this is the standup with themselves.
 
 Read `${CLAUDE_PLUGIN_ROOT}/references/practice-workspace.md`. Gather state from the
-workspace: every file in `leads/` and every active engagement under
+workspace: every lead record (`leads/**/*- Lead.md`) and every active engagement under
 `clients/*/engagements/**/*- Engagement.md`. If no workspace, ask the user to list their
 leads and active clients.
 
 ## Read the state
 
 - **Leads** – for each, note status, fit/verdict (from `/fcxo-qualify` if present),
-  last touch, and the next step on record.
+  last touch, and the next step on record. Each lead sits in its own folder, so the real
+  state is right there beside the record: the newest file in `leads/<slug>/communications/`
+  dates the last touch, `meetings/` shows whether a call has happened, and anything in
+  `leads/<slug>/proposals/` means a number is out and the deal is live. A lead with a
+  sent proposal and a month of silence is a different problem from a lead that was never
+  called; the folder tells you which, so the review can say so.
 - **Active engagements** – status, what's due, and any risk signals (a stalled
   deliverable, a renewal coming up, a quiet client).
 

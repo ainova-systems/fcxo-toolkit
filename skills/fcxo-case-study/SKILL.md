@@ -11,7 +11,7 @@ Close the loop from retention to acquisition: take an engagement that finished (
 passed a real milestone) and write it up as a win story the practice can reuse. The
 result feeds two places - the social proof slot in `/fcxo-proposal`, and `/fcxo-post`
 for a public post. A documented, anonymized case is the strongest asset a fractional
-executive owns; this skill builds it from the record, not from memory.
+executive owns; this skill builds it from the record.
 
 Read `${CLAUDE_PLUGIN_ROOT}/references/practice-workspace.md` for the workspace layout
 and conventions. The workspace root is wherever the folder holding `me/` is - use it as
@@ -61,7 +61,7 @@ This rule is absolute for the public-facing text:
 - **Strip indirect identifiers.** A unique product name, an exact revenue figure, a
   location-plus-niche combination can identify the client as surely as the name. Round
   or generalize any detail that would let a reader work out who it is - and say so
-  honestly ("roughly", "about") rather than presenting a blurred number as exact.
+  honestly ("roughly", "about"). Never present a blurred number as exact.
 
 ## Structure - evidence over adjectives
 
@@ -70,8 +70,8 @@ positive statements of what IS, position from strength, artifact-based proof ove
 time-claims, no em-dash, no AI-slop vocabulary. The story is four beats:
 
 1. **Situation** - the client's felt problem when the user arrived, in buyer language
-   ("releases kept slipping", "no one could see the cash position"), not expert
-   categories. Two or three sentences.
+   ("releases kept slipping", "no one could see the cash position"). Two or three
+   sentences.
 2. **What the user did** - the decisions and interventions, told plainly in the role's
    lens. Concrete actions and calls made, no adjectives doing the work of facts.
 3. **Outcome** - measurable where the record supports it. Every number traces to a

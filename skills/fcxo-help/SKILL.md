@@ -22,7 +22,7 @@ actually exists each time:
 - Read `${CLAUDE_PLUGIN_ROOT}/README.md` for the human grouping (Foundation, Find & win,
   Communicate, Deliver, Market, Run, Documents & brand) and the starting sequence.
 - If a skill folder exists that the README does not list (or the README lists one with no
-  folder), say so plainly rather than hide the mismatch.
+  folder), say so plainly.
 
 ## Present the map
 
@@ -45,4 +45,4 @@ nothing fits, say so and suggest `/fcxo-learn-skill` to build a new skill for it
 ## Notes
 
 - This is the in-session guide; the same skills also show in the harness picker (`/`, `+`).
-- Keep descriptions in the user's words - "use when..." phrasing - not internal jargon.
+- Keep descriptions in the user's words - "use when..." phrasing - and free of internal jargon.

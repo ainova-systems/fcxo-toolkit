@@ -35,9 +35,9 @@ Before writing, study the pattern. Spawn a few **parallel research subagents** (
 subagents are unavailable, do this inline with WebSearch / WebFetch) to gather in
 parallel: how this task or skill is done well elsewhere, similar published skills and
 their structure, and whatever the user's referenced URL or skill reveals. Keep it bounded
-- a handful of focused searches, not an open-ended crawl. Synthesize the best practices
-and the common shape into notes you build from. This is what lifts the result above the
-single example the user happened to bring.
+to a handful of focused searches. Synthesize the best practices and the common shape into
+notes you build from. This is what lifts the result above the single example the user
+happened to bring.
 
 ## 3. Draft the skill model
 
@@ -45,7 +45,7 @@ From the input plus the research, write down: purpose, the **trigger** (when to 
 phrases the user would say), **inputs**, **atomic steps**, **output format**, **where
 output is saved**, **rules / constraints**, and whether it should run **on demand or on a
 schedule**. Mark which concrete values are **variables** (client, date, amount) so the
-skill generalizes instead of overfitting to one example.
+skill generalizes beyond the one example it came from.
 
 ## 4. Finalize scope with a short interview
 
@@ -60,8 +60,8 @@ place is also `/fcxo-brainstorm`; this skill builds the one you have chosen.)
 
 Tag the skill **on-demand** (fire when needed) or **scheduled** (runs on a cadence, e.g.
 a Monday review), or partially (some runs manual). Scheduling infrastructure (cron, cloud
-schedules) belongs to the user's harness, not this plugin: record the schedule intent in
-the skill and tell the user how to wire it in their tool (e.g. a Cowork scheduled task).
+schedules) belongs to the user's harness: record the schedule intent in the skill and tell
+the user how to wire it in their tool (e.g. a Cowork scheduled task).
 Default to on-demand unless it must run even when the user forgets.
 
 ## 6. Write the SKILL.md (standards-guided)
@@ -69,6 +69,15 @@ Default to on-demand unless it must run even when the user forgets.
 Author a standards-compliant skill in the agentskills.io format - the same standard this
 toolkit uses, so it is portable across Claude Code, Cowork, Codex and others:
 
+- **Name it plainly. The `fcxo-` prefix is reserved** for the skills that ship with this
+  toolkit, so the skill you write here gets a plain descriptive name
+  (`weekly-lead-opportunity-scan`, `monday-invoice-run`). A skill named `fcxo-something`
+  would collide with a toolkit skill on the next plugin update and the user's own work
+  would be shadowed by it.
+- **Check it is not a duplicate.** Before settling on the name, compare the skill model
+  against the toolkit skills already installed (`/fcxo-help` lists them). If it does the
+  same job under a different name, say so and offer to extend the existing skill, so the
+  user is left with one skill to maintain and no near-twin to keep in sync.
 - frontmatter: `name` and a concise `description` that **front-loads the trigger
   keywords** (models undertrigger and descriptions get truncated, so put the "use
   when..." phrases first);
@@ -83,15 +92,31 @@ toolkit uses, so it is portable across Claude Code, Cowork, Codex and others:
   under ~500 lines; push long reference material into a `references/` file beside it.
 - If the task reads the practice workspace, wire it to `practice-workspace.md` (read
   context, write output to the right folder, wiki-link related files).
+- **A generated skill inherits the toolkit's hard rules. Write them into its Rules
+  section, in its own words, whenever they apply:**
+  - **Outward communications are draft-only.** If the skill touches an email, a DM, a
+    message, or anything else addressed to another person, it writes the draft into the
+    workspace for the user to send. It sends nothing itself. A user asking for a skill that
+    "confirms the call" or "sends the weekly follow-up" gets a skill that **drafts** the
+    confirmation or the follow-up.
+  - **The connector write boundary.** If the skill touches a connected tool, it reads
+    `Practice Workspace - Integrations.md` to learn which tool the user has. It never names
+    a vendor and never asks for a credential, an API key, or an OAuth flow. The one write
+    it may make is a guest-free hold on the user's own calendar. Every other connected tool
+    is read-only: read from it, draft into the workspace. A generated skill never sends,
+    invites, notifies, or shares, and it never creates or modifies a calendar event that
+    already has attendees, because the calendar service emails every attendee an update.
+  - If the user's request needs a send to work at all, say so plainly, build the drafting
+    half, and leave the send to them.
 
 ## 7. Stage for review, do not auto-activate
 
 Mirror the toolkit's draft-only discipline as a write-approval gate. Ask once where the
 user's harness reads skills from (e.g. the project's `.claude/skills/<name>/SKILL.md`, or
 their personal skills folder) and write the draft there; if they want to look first, stage
-it in `skills/<name>/SKILL.md` under the workspace root for review before it goes live. Restate the trigger
-phrase so they can fire it. Never write a user's custom skill into a shared or public
-location automatically.
+it in the workspace's own skills folder, `skills/<name>/SKILL.md`, for review before it
+goes live. Restate the trigger phrase so they can fire it. Never write a user's custom
+skill into a shared or public location automatically.
 
 ## Validate
 

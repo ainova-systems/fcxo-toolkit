@@ -2,7 +2,7 @@
 
 Shared writing rules for any user-facing copy this plugin drafts: outreach, posts,
 memos, call summaries, invoices. The goal is copy that reads as a competent professional
-wrote it, not as a template or an AI.
+wrote it.
 
 ## Voice comes from the user
 
@@ -22,11 +22,11 @@ positive statement carries its own weight.
 - Weak: "Hands-on at critical moments, not advice-only."
 - Strong: "I stay hands-on through delivery."
 
-## Buyer pain, not expert categories
+## Write the buyer's pain
 
 Short copy describes what the buyer feels ("AI tools aren't delivering", "we're stuck
-between launches"), not the expert's decision categories ("architecture boundaries to
-design"). Save expert detail for the call.
+between launches"). Save the expert's decision categories ("architecture boundaries to
+design") for the call.
 
 ## Kill the AI-slop tells
 
@@ -45,8 +45,8 @@ These rules apply to 1:1 messages (cold/warm/referral outreach, email replies, D
 do not govern posts, memos, summaries, or invoices, which keep their own structure.
 
 - Match greeting warmth, register (informal vs formal), length, punctuation, sign-off,
-  and language. Default to less formal, not more. Never escalate to formal if they were
-  informal.
+  and language. Default to the less formal register. Never escalate to formal if they
+  were informal.
 - Cut filler: "just wanted to", "hope this finds you well", "thanks for reaching out".
 - Cut uninvited closing prompts unless the sender used one.
 - Don't restate their question before answering. Don't echo their own info back.

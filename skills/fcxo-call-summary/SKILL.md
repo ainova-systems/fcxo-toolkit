@@ -50,4 +50,4 @@ If no workspace, return all three in chat.
 
 - Distinguish a stated commitment from a vague intention – only firm commitments become
   action items with owners.
-- If the notes are thin, summarize what's there and flag the gaps rather than padding.
+- If the notes are thin, summarize what's there and flag the gaps. Never pad.

@@ -32,7 +32,7 @@ A renewal conversation happens **before** the term expires, while the user still
 the initiative. If the engagement file carries a term or end date, check it: the right
 moment to run this review is **4-6 weeks ahead** of that date. If the date is close or
 already past, say so plainly and adjust the talking points (the ask becomes a
-continuation, not a scheduled renewal). `/fcxo-pipeline-review` surfaces engagements
+continuation of work already running). `/fcxo-pipeline-review` surfaces engagements
 approaching that window week by week.
 
 ## Gather the record
@@ -58,8 +58,8 @@ The workspace holds the whole engagement history. Read, in this order:
 1. **Results vs plan** (client-facing) - what the engagement set out to do vs what
    happened, evidence-backed from the record: cite the deliverable, status update, or
    meeting note behind each result. Where the plan tracked KPIs, show the movement.
-   Never invent numbers - if a result was not measured, mark it as unmeasured rather
-   than estimate it.
+   Never invent numbers - if a result was not measured, mark it as unmeasured. Never
+   estimate it.
 2. **What changed in the client's context** (client-facing) - new goals, new
    constraints, team changes, budget shifts, drawn from meeting notes and
    communications. This sets up why the next period should look the way it does.
@@ -69,7 +69,7 @@ The workspace holds the whole engagement history. Read, in this order:
    the practice (referrals, case-study weight, portfolio fit).
 4. **Options and recommendation** (internal) - renew as-is / expand / reshape
    (different scope or cadence) / step back or wind down. One recommendation, stated
-   plainly, with the reasoning. Not a menu.
+   plainly, with the reasoning behind it.
 5. **Proposed next-period scope and price** (client-facing) - anchored to
    `me/*- Offers.md` and consistent with the recommendation. A reshaped engagement may
    hand off to `/fcxo-proposal` for a full proposal document.
@@ -103,7 +103,7 @@ copy principles to client-facing prose (read
 - Every result in the client-facing review cites a file from the record or is marked
   as unmeasured; nothing is invented.
 - The internal read is honest, including where the engagement underperformed.
-- One recommendation, stated plainly - not a menu.
-- The proposed price is anchored to the offers file, not improvised.
+- One recommendation, stated plainly.
+- The proposed price is anchored to the offers file.
 - The internal sections are unmistakably marked, and nothing internal leaks into the
   client-facing part.

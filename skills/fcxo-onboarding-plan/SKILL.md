@@ -27,17 +27,21 @@ for the role, the engagement scope, and the start date, and return the plan in c
 
 ## Step 1 - Read what the engagement already says
 
-The plan must serve **this** scope, not a generic template. Before asking anything,
+The plan must serve **this** engagement's recorded scope. Before asking anything,
 read what the workspace holds:
 
 - **Engagement file** `clients/<slug>/engagements/<id>/*- Engagement.md` - scope,
   goals, price, cadence, start date. This is the spine of the plan.
 - **Client profile** `<Client> - Profile.md` - company, industry, key contacts.
-- **Discovery calls** in `engagements/<id>/meetings/` - what the client said is broken,
-  who was in the room, what was floated.
-- **The proposal** in `clients/<slug>/documents/`, or the lead file
-  `leads/<Client> - Lead.md` if one preceded the client - what was promised during the
-  sale. The plan must honor those promises or name the change explicitly.
+- **Discovery calls** in `clients/<slug>/meetings/` (the sales calls, which moved across
+  with the folder) and `engagements/<id>/meetings/` (anything since the contract) - what
+  the client said is broken, who was in the room, what was floated.
+- **The proposal** in `clients/<slug>/proposals/` - what was promised during the sale,
+  and the best source for it. When a lead converts, its whole folder moves from
+  `leads/<slug>/` to `clients/<slug>/`, so the proposal that won the deal is already
+  sitting there, next to the lead record and the discovery calls that produced it. Read
+  the lead record too (`clients/<slug>/<Client> - Lead.md`) for the qualification story.
+  The plan must honor those promises or name the change explicitly.
 
 Then ask **one short batched question** covering only the genuine gaps: the start date,
 the key stakeholders to meet, and any known constraints (budget freeze, hiring pause,
@@ -80,8 +84,8 @@ Structure the plan in six parts, each framed in the role's lens:
 - **Never fabricate KPIs, numbers, or org specifics** the workspace does not hold.
   Use named `TODO:` placeholders the user fills (`TODO: baseline CAC from last
   quarter`, `TODO: name of the VP Sales`), same convention as the sibling skills.
-- **Role lens, not faked depth.** The role chooses which KPI families and stakeholders
-  appear; it does not license inventing domain detail the user has not supplied.
+- **Role lens.** The role chooses which KPI families and stakeholders appear; it does
+  not license inventing domain detail the user has not supplied.
 - Apply `${CLAUDE_PLUGIN_ROOT}/references/copy-principles.md` to the prose: no
   em-dash, no AI-slop, plain professional language. The client will read this.
 
@@ -96,7 +100,7 @@ plan from the engagement file so the graph connects both ways. Otherwise return 
 plan in chat.
 
 When the user wants a branded, client-facing document, render the finished plan with
-`/fcxo-report` - this skill owns the content, not the rendering.
+`/fcxo-report` - this skill owns the content, and `/fcxo-report` owns the rendering.
 
 ## Quality gate (before delivering)
 

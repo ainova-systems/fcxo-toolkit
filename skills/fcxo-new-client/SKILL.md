@@ -51,7 +51,7 @@ Do not invent facts. Use `TODO:` for anything the user did not provide.
 Pick an engagement id: a short kebab slug the user gives, or derive one (e.g.
 `retainer-2026`, `q3-assessment`). Create `clients/<slug>/engagements/<id>/` with:
 
-- `<Client> - <Descriptor> Engagement.md` (e.g. `Northwind Labs - Retainer
+- `<Client> - <Descriptor> Engagement.md` (e.g. `Orlend Labs - Retainer
   Engagement.md`) – from the `Engagement.md` template, copied in and renamed to this
   self-identifying name. Record **scope, price, rate, status, start date, billing
   cadence**. These fields are read later by `/fcxo-invoice`, `/fcxo-decision-report`,
@@ -72,6 +72,5 @@ first deliverable, or `/fcxo-invoice` when it is time to bill.
 
 ## Notes
 
-- Mirror the user's existing client folders if they already have a convention – match
-  it rather than imposing a new one.
+- If the user already has a convention for client folders, match it.
 - Light frontmatter only; never enforce it.

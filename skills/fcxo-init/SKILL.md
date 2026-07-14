@@ -72,15 +72,73 @@ starter files:
 ### `practice/Practice Workspace - Guide.md`
 The single orientation file at the workspace root (never a `README.md` – generic
 basenames collide when the folder opens in Obsidian). Cover: what this folder is, the
-layout, that the FCxO skills read and write here, and the **self-identifying naming
-rule** – every file carries its full context in its own name (owner files prefixed with
-the owner name, client files with the client name, leads ending in `- Lead`, dated
-outputs leading with the date), so no two notes share a basename and skills discover a
-file by its `type:` and filename suffix. Note that the `templates/` files are copied out
-and renamed to a self-identifying name on use. Per the wiki convention in
-`practice-workspace.md`, the guide links the main entry points so the workspace opens as
-a connected graph: `[[<Owner> - Profile]]`, `[[<Owner> - Positioning]]`, and
-`[[<Owner> - Offers]]`.
+layout, that the FCxO skills read and write here, and these four conventions:
+
+- **One company, one folder.** Every company gets its own folder holding its record and
+  its typed sub-folders `communications/`, `meetings/`, `proposals/`. Before a contract
+  the folder is `leads/<slug>/`; once the deal is won the same folder moves to
+  `clients/<slug>/` and gains `engagements/` and `documents/`. Messages, call prep and
+  summaries, and proposals live inside the company folder, so a proposal is a document in
+  `proposals/` and never a loose file beside a lead record.
+- **Self-identifying naming.** Every file carries its full context in its own name (owner
+  files prefixed with the owner name, client files with the client name, leads ending in
+  `- Lead`, dated outputs leading with the date), so no two notes share a basename and
+  skills discover a file by its `type:` and filename suffix.
+- **The naming exception.** `templates/` and `design/` are the two folders whose files are
+  named for the **document type** they define (`Proposal.md`, `Proposal.html`). They hold
+  blanks, never records, and the type name is what makes them findable. Every template is
+  copied out and renamed to a self-identifying name on use.
+- **Templates and design pair by basename.** `templates/<Doc>.md` says what fields a
+  document type has; `design/<Doc>.html` says how it looks. A document skill writes the
+  markdown against the data template, and a render fills the design template of the same
+  name. `/fcxo-setup-template` replaces a layout with one the user designed in Claude.
+
+Per the wiki convention in `practice-workspace.md`, the guide links the main entry points
+so the workspace opens as a connected graph: `[[<Owner> - Profile]]`,
+`[[<Owner> - Positioning]]`, `[[<Owner> - Offers]]`, and
+`[[Practice Workspace - Integrations]]`.
+
+### `practice/Practice Workspace - Integrations.md`
+The second root file, beside the guide: the registry that says which connected tool serves
+which capability. This toolkit ships no connectors and no credentials. The user connects
+email, calendar or a drive once in their own agent surface (the connectors built into
+Claude Cowork, or ones installed from its marketplace), and records them here. A skill that
+needs a connected tool reads this file to learn which one the user has, so changing tools
+means editing one row and every skill follows.
+
+Seed the table with the rows **empty** (`not connected yet`) and say in Step 5 that the
+user fills in whichever tools they connect. Never ask for a credential, an API key, or an
+OAuth flow during init, and never name a vendor.
+
+```markdown
+---
+type: integrations
+updated: <YYYY-MM-DD>
+---
+
+# Practice Workspace - Integrations
+
+This toolkit ships no connectors. Connect the tools you want in your own agent surface -
+the connectors built into Claude Cowork, or ones from its marketplace - then name them in
+the table below. The FCxO skills read this table to find out which tool you use.
+
+| Capability | Connected tool | Skills that use it | Access |
+|---|---|---|---|
+| Calendar | not connected yet | `/fcxo-book-call` | Read availability. Create a guest-free hold. |
+| Email | not connected yet | `/fcxo-log-message` | Read only. |
+| Web research | built-in web search | `/fcxo-prospect-research`, lead scans | Read only. |
+
+A capability with no tool named still works: the skill asks you for the few facts it needs
+and carries on.
+
+## The write boundary
+
+A guest-free hold on your own calendar is the only write a skill makes through a connected
+tool. Every other connected tool is read-only: a skill reads from it and drafts into this
+workspace for you to send. No skill sends, invites, notifies, or shares. A skill never
+creates or modifies an event that already has attendees, because the calendar service
+emails every attendee an update, and that is an outward message you did not send.
+```
 
 ### `practice/me/<Owner> - Profile.md`
 ```markdown
@@ -141,50 +199,103 @@ updated: <YYYY-MM-DD>
 ```
 
 ### Concern folders (no README placeholders)
-`clients/`, `leads/`, `content/`, `finance/`, `research/`, `templates/`. Do **not** drop
-a per-folder `README.md` – generic basenames collide when the workspace opens in
-Obsidian, and the folder names are self-explanatory. The `Practice Workspace - Guide.md`
-already describes what each folder holds. A folder comes into being when its first real
-file is written (e.g. `templates/` exists once you write the templates below; the others
-appear when `/fcxo-new-client` or a skill writes the first file into them). If the user
-keeps the workspace under git and wants the empty folders tracked now, add a `.gitkeep`
-(never a `README.md`); a plain Obsidian folder does not need one.
+`clients/`, `leads/`, `content/`, `finance/`, `research/`, `templates/`, `design/`,
+`skills/`. Do **not** drop a per-folder `README.md` – generic basenames collide when the
+workspace opens in Obsidian, and the folder names are self-explanatory. The
+`Practice Workspace - Guide.md` already describes what each folder holds. A folder comes
+into being when its first real file is written (e.g. `templates/` and `design/` exist once
+you write the templates below; the others appear when `/fcxo-new-client` or a skill writes
+the first file into them). If the user keeps the workspace under git and wants the empty
+folders tracked now, add a `.gitkeep` (never a `README.md`); a plain Obsidian folder does
+not need one.
 
-### `practice/templates/`
+`clients/` and `leads/` follow the **one company, one folder** rule from the shared
+reference: a company is a folder, `leads/<slug>/` before the contract and
+`clients/<slug>/` after it, and both hold the same typed sub-folders `communications/`,
+`meetings/`, and `proposals/` (a client adds `engagements/` and `documents/`). Do not
+scaffold example company folders at init; `/fcxo-new-client` and the lead skills create
+them on first use, with the sub-folders coming into being as the first message, meeting,
+or proposal is written.
+
+### `practice/templates/` (the data templates)
 Drop ready-to-copy templates: `Client - Profile.md`, `Engagement.md`, `Lead.md`,
-`Invoice.md`. Each is a minimal markdown skeleton with the light frontmatter (`type:`
-etc.) from the shared reference. Keep them short. These keep simple template names
-because they are **copied out and renamed to a self-identifying name on use** (a
-`<Client> - Profile.md`, a `<Client> - <Descriptor> Engagement.md`, a
-`<Lead> - Lead.md`); note that in the guide so the convention is clear.
+`Proposal.md`, `Invoice.md`. Each is a minimal markdown skeleton with the light
+frontmatter (`type:` etc.) from the shared reference. Keep them short. These keep the
+document-type name because `templates/` is the stated naming exception: they are blanks,
+**copied out and renamed to a self-identifying name on use** (a `<Client> - Profile.md`, a
+`<Client> - <Descriptor> Engagement.md`, a `<Lead> - Lead.md`, a
+`<YYYY-MM-DD> - <Company> Proposal.md`); state that in the guide so the convention is
+clear.
 
-### `practice/me/brand/` (seed the default brand)
+`Proposal.md` carries `type: proposal` in its frontmatter and the section structure
+`/fcxo-proposal` writes, so a proposal is a document type from day one and never drifts
+into a loose file beside a lead record:
+
+```markdown
+---
+type: proposal
+status: draft
+updated: <YYYY-MM-DD>
+---
+
+# <Company> Proposal
+
+## Their situation
+## Proposed engagement
+### Explicitly out of scope
+## Timeline and start
+## Investment
+## Terms
+## Next step
+```
+
+### `practice/design/` (the design system and the design templates)
 Read `${CLAUDE_PLUGIN_ROOT}/references/document-system/DESIGN.default.md` and write it to
-`practice/me/brand/DESIGN.md` (file tools, no shell), filling in `brandName` and the
-`from` block (and `footerLegal` if known) from the details gathered in Step 2 (leave the
-rest at the clean default, accent `#1F6B85`). DESIGN.md is the whole document design system
-(tokens + recipes) in one file. Do **not** ask brand
-questions during init – a sensible default lets invoices work immediately. Just record that
-the default is in place.
+`practice/design/DESIGN.md` (file tools, no shell), filling in `brandName` and the `from`
+block (and `footerLegal` if known) from the details gathered in Step 2, leaving the rest at
+the clean default (accent `#1F6B85`). DESIGN.md is the whole document design system (tokens
+plus recipes) in one file, and the logo lives beside it in `design/`. Do **not** ask brand
+questions during init – a sensible default lets documents work immediately. Just record
+that the default is in place.
+
+Then seed the design half of the template pair: copy
+`${CLAUDE_PLUGIN_ROOT}/references/document-system/report.html` to
+`practice/design/Proposal.html` as the starting proposal layout. A file in `templates/` and
+a file in `design/` with the **same basename are a pair**: `templates/Proposal.md` holds the
+fields, `design/Proposal.html` holds the look, and a render fills the layout from the
+markdown. Tell the user in Step 5 that `/fcxo-setup-template` replaces any layout with one
+they designed in Claude, and that a new document type is a new pair (`templates/<Doc>.md`
+plus `design/<Doc>.html`).
 
 ## Step 5 – Confirm
 
 Summarize what was created in plain language (where it is, what's inside, what's still
-`TODO`). Mention that the scaffolded files are wikilinked to each other (the guide and the
-`me/` files cross-link), so the workspace opens as a connected graph in Obsidian rather
-than isolated notes. Suggest the natural next steps: `/fcxo-new-client` to add their first
+`TODO`). List the root files by name, `Practice Workspace - Guide.md` and
+`Practice Workspace - Integrations.md`, alongside the `me/`, `templates/` and `design/`
+starters. Mention that the scaffolded files are wikilinked to each other (the guide and the
+`me/` files cross-link), so the workspace opens as a connected graph in Obsidian.
+
+**Say one sentence about integrations.** The toolkit ships no connectors: the user connects
+email or a calendar in their own agent surface and writes the tool's name into the empty
+rows of `Practice Workspace - Integrations.md`, and the skills read it from there. Add that
+a guest-free hold on their own calendar is the only write any skill makes through a
+connected tool; everything else is read-only and every outward message stays a draft.
+
+Suggest the natural next steps: `/fcxo-new-client` to add their first
 client,
 fill in the `TODO`s in `me/`, or `/fcxo-brainstorm` to extract their positioning and
 offers through a guided interview if writing them cold feels hard. Keep it to a few
 sentences.
 
 **Recommend branding, don't force it.** Note that invoices and documents already work
-on a clean default look, and `/fcxo-brand` adjusts the color, logo, and billing details
-to make them theirs. One line – don't run it now.
+on a clean default look, that `/fcxo-brand` adjusts the color, logo, and billing details
+in `design/DESIGN.md` to make them theirs, and that `/fcxo-setup-template` swaps any
+`design/<Doc>.html` layout for one they designed in Claude. Two lines – don't run either
+now.
 
 ## Notes
 
 - Light, optional frontmatter only – never validate or enforce it.
 - No scripts, no automation, no sync. Just structure and starter content.
 - If the user already has a similar folder of their own, offer to adopt it (point the
-  skills at it) rather than creating a parallel one.
+  skills at it) so they keep one workspace.

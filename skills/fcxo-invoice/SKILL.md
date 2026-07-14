@@ -17,7 +17,7 @@ Read `${CLAUDE_PLUGIN_ROOT}/references/practice-workspace.md` (where data lives)
 
 ## Step 1 – Gather the data
 
-- **Brand + biller** – read `me/brand/DESIGN.md` under the workspace root (the folder
+- **Brand + biller** – read `design/DESIGN.md` under the workspace root (the folder
   holding `me/`). If it doesn't exist, use
   `${CLAUDE_PLUGIN_ROOT}/references/document-system/DESIGN.default.md` and tell the
   user (once) they can run `/fcxo-brand` to set their color, logo, and billing details.
@@ -45,18 +45,20 @@ Read `${CLAUDE_PLUGIN_ROOT}/references/practice-workspace.md` (where data lives)
 
 ## Step 3 – Build the file
 
-Build from `${CLAUDE_PLUGIN_ROOT}/references/document-system/invoice.html` per the render
-contract in `${CLAUDE_PLUGIN_ROOT}/references/document-system/README.md`. The template
-HTML structure is fixed; only the brand/design layer comes from DESIGN.md:
+Use the workspace layout `design/Invoice.html` when it exists, otherwise build from
+`${CLAUDE_PLUGIN_ROOT}/references/document-system/invoice.html`, per the render contract
+in `${CLAUDE_PLUGIN_ROOT}/references/document-system/README.md`. The layout's HTML
+structure is fixed; only the brand/design layer comes from DESIGN.md:
 
 1. **Tokens → `:root`.** Emit every DESIGN.md frontmatter token into the
    `/* @BRAND_TOKENS */` block as `--token: value`: each `colors` key → `--<key>` (the
    `status` keys → `--green` / `--amber` / `--red`); `typography.font-*` → `--font-*`;
    `typography.scale.*` → `--fs-*`; `typography.tracking-label` → `--tracking-label`;
    `logo.size` → `--logo-size`. Use `font-head` verbatim (it is `var(--font-body)` by
-   default, or a real stack like `Georgia, serif`). Emit the full set, not just `--accent`,
-   or the derived shades and fonts fall back to the defaults. (`brandName` is content, not
-   a token: it fills the `{{BRAND_NAME}}` wordmark in step 4.)
+   default, or a real stack like `Georgia, serif`). Emit the full set; if only `--accent`
+   is emitted, the derived shades and fonts fall back to the defaults. (`brandName` is
+   content: it fills the `{{BRAND_NAME}}` wordmark in step 4, so it stays out of the token
+   block.)
 2. **Recipes → `/* @DESIGN_SYSTEM */`.** Generate the component CSS from the DESIGN.md
    "Components" recipes (header lockup, parties, ledger, totals, amount-in-words, terms,
    callout, chip, signature, footer, shared utilities, plus the sheet / page setup),

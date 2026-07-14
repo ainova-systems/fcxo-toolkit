@@ -29,7 +29,7 @@ Read `${CLAUDE_PLUGIN_ROOT}/references/practice-workspace.md` (where data lives)
   user).
 - **Standalone** (no workspace) - compose the report in chat from what the user
   provides, and offer to render once a workspace exists: the render needs the brand
-  file (`me/brand/DESIGN.md` or the plugin default) and a place to save.
+  file (`design/DESIGN.md` or the plugin default) and a place to save.
 
 Ask one short batched question only for what is genuinely missing (at minimum: what was
 reviewed and for whom).
@@ -57,13 +57,20 @@ read `${CLAUDE_PLUGIN_ROOT}/references/copy-principles.md`).
 
 ## Step 3 - Render (branded, self-contained)
 
-**Brand** - read `me/brand/DESIGN.md` under the workspace root. If it does not exist,
+**Brand** - read `design/DESIGN.md` under the workspace root. If it does not exist,
 use `${CLAUDE_PLUGIN_ROOT}/references/document-system/DESIGN.default.md` and tell the
 user (once) they can run `/fcxo-brand` to set their color, logo, and details.
 
-Build from `${CLAUDE_PLUGIN_ROOT}/references/document-system/report.html` per the
-render contract in the document-system README. The template HTML structure is fixed;
-only the brand/design layer comes from DESIGN.md:
+**Layout** - the design template is paired to the document type by basename, so a report
+renders in `design/Report.html`, a proposal in `design/Proposal.html`, an invoice in
+`design/Invoice.html`. Look in the workspace for `design/<Doc>.html` for the type you are
+rendering and use it as the HTML layout. The user designs a layout once, drops it in
+`design/` (`/fcxo-setup-template` builds the pair from a design sample), and every future
+document of that type comes out in it. When the workspace holds no design template for
+this type, fall back to `${CLAUDE_PLUGIN_ROOT}/references/document-system/report.html`.
+
+Fill the chosen layout per the render contract in the document-system README. The
+template HTML structure is fixed; only the brand/design layer comes from DESIGN.md:
 
 1. **Tokens → `:root`.** Emit every DESIGN.md frontmatter token into the
    `/* @BRAND_TOKENS */` block as `--token: value`: each `colors` key → `--<key>` (the
@@ -76,15 +83,18 @@ only the brand/design layer comes from DESIGN.md:
    "Components" recipes this template uses (sheet / page setup, toolbar, header lockup,
    key-value grid, ledger, callout, chip, footer, shared utilities), writing every
    branded value as `var(--token)`, never a re-hardcoded literal; structural geometry
-   is the literal value each recipe states. The template's third `<style>` block
-   (cover, executive summary, section heading rule, finding, chip severity variants,
-   next steps, page breaks) is fixed template CSS; leave it exactly as shipped.
+   is the literal value each recipe states. The layout's own template CSS (cover,
+   executive summary, section heading rule, finding, chip severity variants, next steps,
+   page breaks - the third `<style>` block in the plugin template) is fixed; leave it
+   exactly as the layout ships it.
 3. **Logo, shell-free.** Inline an SVG as `<svg>` markup in `.mark`, or use the
    `data:` URL from DESIGN.md `logo.src` as the `.mark img` src; with no logo, remove
    `.mark` (wordmark-only). Never shell out to encode an image.
-4. **Fill the template.** Fill every `{{PLACEHOLDER}}` (`{{BRAND_NAME}}`,
+4. **Fill the template.** Fill every `{{PLACEHOLDER}}` and every `<!-- @MARKER -->` the
+   chosen layout declares; a workspace design template uses the same injection markers,
+   so read it and fill what it asks for. In the plugin template that is `{{BRAND_NAME}}`,
    `{{DOC_TYPE}}`, `{{REPORT_TITLE}}`, `{{CLIENT_NAME}}`, `{{AUTHOR_LINE}}`,
-   `{{REPORT_DATE}}`, `{{EXEC_SUMMARY}}`, `{{FOOTER_LEGAL}}`). Emit one
+   `{{REPORT_DATE}}`, `{{EXEC_SUMMARY}}`, `{{FOOTER_LEGAL}}`. Emit one
    `<section class="report-section">` per report section at `<!-- @SECTIONS -->`:
    findings as `.finding` blocks with a `chip--green` / `chip--amber` / `chip--red`
    severity chip; recommendation tables on the `.ledger` pattern with
@@ -97,6 +107,22 @@ the HTML - it is the client-facing file.
 
 ## Step 4 - Save and deliver
 
+The rendered `.html` is always a **sibling of its markdown**, so where it lands follows
+what the document is.
+
+**A proposal** - the source markdown carries frontmatter `type: proposal`, or it sits in
+a `proposals/` folder. `/fcxo-proposal` owns that markdown; this skill only adds the
+rendered sibling beside it:
+
+- **HTML (client-facing)** - `<company>/proposals/<YYYY-MM-DD> - <Company> Proposal.html`,
+  in the same `proposals/` folder as the markdown. `<company>` resolves to `leads/<slug>/`
+  before the contract and `clients/<slug>/` after it, which is what lets a proposal render
+  at lead stage, when no engagement folder exists yet.
+- Leave the markdown as `/fcxo-proposal` wrote it; if that skill has not saved it yet,
+  save it to the same `proposals/` folder under the same name with the `.md` extension.
+
+**An engagement deliverable** - a report, assessment, decision report, or review:
+
 - **Markdown (the durable record)** - save to
   `clients/<slug>/engagements/<id>/deliverables/<YYYY-MM-DD> - <Topic> Report.md` with
   frontmatter `type: deliverable`, `status: draft`, `updated: <date>`. Per the wiki
@@ -104,8 +130,10 @@ the HTML - it is the client-facing file.
   and the engagement (`[[<Client> - <Descriptor> Engagement]]`).
 - **HTML (client-facing)** - save the rendered file as a sibling in the same folder:
   `.../deliverables/<YYYY-MM-DD> - <Topic> Report.html`. No wikilinks inside.
-- Tell the user to open the `.html` in a browser and print to PDF. When they say it
-  went to the client, update the markdown note's `status:` (`draft` → `sent`).
+
+Either way: no wikilinks inside the `.html`, it is the client-facing file. Tell the user
+to open it in a browser and print to PDF (Ctrl/Cmd-P, Save as PDF). When they say it went
+to the client, update the markdown note's `status:` (`draft` → `sent`).
 
 ## Where this sits (hand-offs)
 

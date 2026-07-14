@@ -21,8 +21,8 @@ a CFO on cash, pricing, and commitments.
 
 Long interviews fill up context. If you hold answers only in your head, you will
 eventually misremember, conflate, or drop something. So you **checkpoint to disk after
-every single answer**. The file, not your context, is the source of truth. Never make
-the user ask you to save progress.
+every single answer**. The file is the source of truth. Never make the user ask you to
+save progress.
 
 ## Setup (do this BEFORE the first question)
 
@@ -73,7 +73,7 @@ is that if context is lost at any moment, the file already holds everything said
 - Resolve dependencies in order: settle the upstream decision before the ones that
   depend on it.
 - If a question can be answered by **reading a workspace file or a doc the user hands
-  you**, do that instead of asking, and only surface what's net-new.
+  you**, read it and only surface what's net-new.
 - When the user **can't answer** something, capture it as a flag with the right owner
   and move on. Don't stall.
 - Keep going until the user says you're done, or you've covered every branch. Offer a
@@ -105,8 +105,8 @@ Date: {date} · Goal: {one line}
 2. Give the user a short recap: what's captured, what's still flagged, and the
    suggested next step.
 3. **Promote what matured.** If the session produced material that belongs in a
-   standing file, offer to fold it in – their own words, not polished into marketing
-   copy (`${CLAUDE_PLUGIN_ROOT}/references/copy-principles.md`): positioning →
+   standing file, offer to fold it in, keeping their own words and never polishing them
+   into marketing copy (`${CLAUDE_PLUGIN_ROOT}/references/copy-principles.md`): positioning →
    `me/*- Positioning.md`, offers and rates →
    `me/*- Offers.md`, an engagement decision → that engagement's `notes/` or a
    `/fcxo-decision-report`, a post idea → `content/`. The raw capture file stays where

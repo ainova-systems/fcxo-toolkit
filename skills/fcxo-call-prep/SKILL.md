@@ -9,7 +9,7 @@ allowed-tools: Read, Write, Edit, Glob, WebFetch, WebSearch
 
 The pre-call counterpart to `fcxo-call-summary`. Build a single page the user reads in
 five minutes before a discovery/sales call or an important client call, so the call
-moves the deal or the engagement instead of meandering.
+moves the deal or the engagement forward.
 
 Read `${CLAUDE_PLUGIN_ROOT}/references/practice-workspace.md` for workspace conventions
 and `${CLAUDE_PLUGIN_ROOT}/references/copy-principles.md` for how anything the user will
@@ -27,14 +27,18 @@ workspace exists, list the plausible leads/clients and ask once.
 
 Who the call is with decides the prep:
 
-- Matches a `leads/*- Lead.md` file, or is a prospect with no client folder -> **lead call**.
+- Matches a lead folder (`leads/**/*- Lead.md`), or is a prospect with no folder at all -> **lead call**.
 - Matches a client under `clients/` -> **client call**.
 - Neither and no workspace -> **standalone** (below).
 
+The mode changes what you read and how you frame the prep. It no longer changes where the
+prep is saved: both land in the company's `meetings/` folder (see Save).
+
 ## Lead / prospect call
 
-Read the lead file first: `leads/<Lead> - Lead.md` already holds the research brief and
-any qualification verdict. Do not redo `/fcxo-prospect-research`. The only web work
+Read the lead file first: `leads/<slug>/<Lead> - Lead.md` already holds the research brief
+and any qualification verdict, and its siblings `communications/` and `meetings/` hold the
+thread and any earlier call. Do not redo `/fcxo-prospect-research`. The only web work
 (WebSearch/WebFetch) is a quick fresh-signals check: anything new since the file's
 `updated:` date - news, role changes, funding. One or two searches at most; fold real
 findings in with their source, and skip the section if nothing changed.
@@ -44,7 +48,7 @@ Prep, in this order:
 1. **Objective** - the single decision or commitment this call should land (a paid
    next step, access to the decision-maker, a scoped pilot). One line.
 2. **Agenda** - a tight sequence the user can steer by: opening, discovery, positioning
-   moment, close. Minutes, not ceremony.
+   moment, close. Give each block its minutes.
 3. **Discovery questions** - walk the pain funnel in the user's role lens, sequenced
    from open ("how is X going") to specific ("what did that cost you last quarter").
    Questions the lead file already answers do not get asked again.
@@ -55,7 +59,7 @@ Prep, in this order:
    answer grounded in `me/*- Positioning.md`. If positioning is empty, ask; never
    fabricate an answer the user would not say.
 6. **Next step to propose** - the one concrete ask at the end of the call, matched to
-   the objective. One step, not a menu.
+   the objective. Propose a single step.
 
 ## Existing client call
 
@@ -70,20 +74,26 @@ Prep, in this order:
 2. **Decisions pending** - what is waiting on this call, linking the relevant
    deliverables (`[[<YYYY-MM-DD> - <Topic>]]`) so the user can open them in one click.
 3. **Risks to raise** - anything on scope, timeline, or budget the user should surface
-   on the call rather than sit on.
+   on the call.
 4. **Outcome** - what this call should produce: a decision made, an approval, a scope
    confirmed. One line.
 
 ## Save
 
-- **Lead call**: append the prep to `leads/<Lead> - Lead.md` under a dated heading
-  (`## Call prep - <YYYY-MM-DD>`), using Edit - never overwrite the file. Refresh
-  `updated:` in its frontmatter.
-- **Client call**: save to
-  `clients/<slug>/engagements/<id>/meetings/<YYYY-MM-DD> - <Client> Call Prep.md` with
-  frontmatter `type: meeting`, `status: draft`, `updated: <date>`. Per the wiki
-  convention, link `[[<Client> - Profile]]` and the engagement file
-  (`[[<Client> - <Descriptor> Engagement]]`).
+Call prep is a document, and a company's documents live in that company's folder. There
+is one destination for both modes, which keeps this simple:
+
+`<company>/meetings/<YYYY-MM-DD> - <Company> Call Prep.md`, frontmatter `type: meeting`,
+`status: draft`, `updated: <date>`. `<company>` is `leads/<slug>/` before the contract and
+`clients/<slug>/` after it; for a client call scoped to one engagement, use that
+engagement's `meetings/` folder (`clients/<slug>/engagements/<id>/meetings/`).
+
+Then write a dated line back into the company record - the lead file for a lead, the
+client profile for a client - with a wikilink to the prep
+(`[[<YYYY-MM-DD> - <Company> Call Prep]]`), using Edit, and refresh `updated:` in its
+frontmatter. Never overwrite the record. Per the wiki convention, the prep links back to
+the company (`[[<Lead> - Lead]]` or `[[<Client> - Profile]]`) and, for a client call, to
+the engagement file (`[[<Client> - <Descriptor> Engagement]]`).
 
 After the call, `/fcxo-call-summary` closes the loop - turn the notes into action items
 and a follow-up. Mention it when delivering the prep.
@@ -98,9 +108,9 @@ chat. Offer to save once a workspace exists.
 
 Before delivering, check:
 
-- Fits one page and reads in five minutes; anything longer gets cut, not compressed.
+- Fits one page and reads in five minutes; anything longer gets cut. Never compress to fit.
 - One objective and one proposed next step, and they match.
-- Questions and objection answers sound like the user's role and voice, not a script.
+- Questions and objection answers sound like the user's role and voice.
 - The prep adds sequence and focus; it does not recap what the lead or engagement file
   already says.
 - Web tools were used only for the fresh-signals check, nothing else.

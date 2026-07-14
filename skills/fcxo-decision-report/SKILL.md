@@ -31,7 +31,7 @@ people), and what "good" looks like.
   source. Research what you can verify; mark assumptions as assumptions.
 - **The reader is busy and senior.** Lead with the recommendation. They read the
   summary and skim the rest.
-- **Role lens, not faked depth.** Frame options in the terms that role owns (a CFO memo
+- **Role lens.** Frame options in the terms that role owns (a CFO memo
   weighs cash and risk; a CMO memo weighs growth and positioning; a CTO memo weighs
   architecture and delivery). Do not assert domain specifics the user hasn't supplied or
   that can't be sourced.
@@ -63,11 +63,12 @@ If a workspace exists, save to
 
 If the user wants a branded, client-facing document, render the finished memo with
 `/fcxo-report` on the workspace document system (one self-contained HTML file the user
-opens and prints to PDF) – this skill owns the content, not the rendering.
+opens and prints to PDF) – this skill owns the content, and `/fcxo-report` owns the
+rendering.
 
 ## Quality gate (before delivering)
 
 - The recommendation is stated up front and is unambiguous.
 - Every number/claim is sourced or flagged as an assumption.
-- The options are real alternatives, not one real option and two straw men.
+- Every option is a real alternative the user would genuinely consider. No straw men.
 - A busy reader gets the decision from the summary alone.

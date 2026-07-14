@@ -9,9 +9,13 @@ allowed-tools: Read, Write, Edit, Glob, WebFetch
 
 Establish or adjust the brand that every client-facing document uses. The output is a
 single human-readable design system stored in the workspace at
-`me/brand/DESIGN.md` (plus a logo file in `me/brand/`). Documents read this one
+`design/DESIGN.md` (plus a logo file beside it in `design/`). Documents read this one
 file, so the user sets their look once and never touches a template. DESIGN.md is the
 whole brand in one file.
+
+`design/` also holds one branded HTML layout per document type (`design/<Doc>.html`),
+paired by basename with its data template in `templates/<Doc>.md`. This skill owns the
+tokens; `/fcxo-setup-template` owns the layouts.
 
 `DESIGN.md` is YAML frontmatter with the normative tokens (colors, typography, page,
 logo, billing) plus a Markdown body that describes how each component is built from those
@@ -21,7 +25,7 @@ exact token shape and the component recipes.
 
 ## The fallback chain (keep it one decision for the user)
 
-Locate `me/brand/DESIGN.md` under the workspace root (the folder holding `me/`). If no
+Locate `design/DESIGN.md` under the workspace root (the folder holding `me/`). If no
 workspace exists at all (no `me/*- Profile.md` anywhere), point the user to
 `/fcxo-init` first - the brand lives in the workspace.
 
@@ -40,7 +44,7 @@ workspace exists at all (no `me/*- Profile.md` anywhere), point the user to
      `accent-pale` a light tint) and write DESIGN.md. Use this when there is nothing to
      copy from.
    - **Default** - copy `${CLAUDE_PLUGIN_ROOT}/references/document-system/DESIGN.default.md`
-     as-is (accent `#1F6B85`). Good enough to send; refine later.
+     to `design/DESIGN.md` as-is (accent `#1F6B85`). Good enough to send; refine later.
 
 In all cases also capture the **business / billing details** into the `from` block
 (name, address, taxId, email, payment, currency), the `invoice` block (series, termsDays,
@@ -50,7 +54,7 @@ not a style token.
 
 ## Write DESIGN.md
 
-Write `me/brand/DESIGN.md` from `DESIGN.default.md`, overriding only what the
+Write `design/DESIGN.md` from `DESIGN.default.md`, overriding only what the
 chosen path produced:
 
 - `colors.accent` (and derive `colors.accent-dim` about 18% darker and
@@ -61,7 +65,7 @@ chosen path produced:
 - `logo.src` - store it so documents embed it with **no shell**. Prefer an **SVG**: keep
   the `<svg>` markup so documents inline it as text. For a **raster** logo, store a
   `data:` URL string; if the session cannot encode the image, ask the user for a `data:`
-  URL or an SVG. Write any logo file into `me/brand/` with the file tools.
+  URL or an SVG. Write any logo file into `design/` with the file tools.
 - `brandName`, the `from` block, `invoice`, and `footerLegal`.
 
 Do not edit the component recipes in the prose body unless the user explicitly wants a

@@ -24,7 +24,7 @@ Claude Cowork users browse.
 
 | Skill | What it does | Why it matters | Priority |
 |-------|--------------|----------------|----------|
-| `fcxo-assessment` | Structured practice/area assessment that composes `fcxo-research-form` + `fcxo-report` | A repeatable diagnostic some engagements open with. Deferred until the two building blocks have seen real use: its value hangs on a proven method, and composing unproven parts risks confident-but-wrong output. The full heavy engine (multi-agent repo scan + verification) stays an internal tool, not part of this shell-free plugin. | Medium |
+| `fcxo-assessment` | Structured practice/area assessment that composes `fcxo-research-form` + `fcxo-report` | A repeatable diagnostic some engagements open with. Deferred until the two building blocks have seen real use: its value hangs on a proven method, and composing unproven parts risks confident-but-wrong output. The full heavy engine (multi-agent repo scan + verification) stays an internal tool, outside this shell-free plugin. | Medium |
 
 Shipped out of the original v2 list in 0.1.0: `fcxo-proposal`, `fcxo-onboarding-plan`,
 `fcxo-status-update`, `fcxo-renewal-review`, `fcxo-call-prep`, `fcxo-case-study`,

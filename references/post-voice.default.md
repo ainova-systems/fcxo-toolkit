@@ -17,13 +17,13 @@ past posts, or a brainstorm).
 - Senior, plain, specific. Write the way the user would say it to a peer across a table.
 - One real, usable idea per post: a lens, a decision rule, a lesson from real work.
 - Concrete over generic: a number, a situation, what actually happened carries the post.
-- Confident, not salesy. The post earns attention by being worth reading, not by selling.
+- Confident and plain. The post earns attention by being worth reading.
 
 ## Structure (the reader's journey)
 
 - Open on the fact or the situation. No throat-clearing ("In this post...", "I want to share...").
-- One connected thought: each sentence extends the one before it, not a list of related facts.
-- A real payoff: the reader leaves with something usable. End on a concrete point or a callback, not a manufactured maxim.
+- One connected thought: each sentence extends the one before it.
+- A real payoff: the reader leaves with something usable. End on a concrete point or a callback.
 
 ## Do
 
@@ -43,7 +43,7 @@ past posts, or a brainstorm).
 
 ## Format
 
-- Default channel LinkedIn; short and scannable, real paragraphs (not broetry).
+- Default channel LinkedIn; short and scannable, in real paragraphs.
 - Hashtags: default none; at most a few plain ones, only when one is genuinely useful.
 
 ## Learned from feedback

@@ -8,7 +8,7 @@ allowed-tools: Read, Write, Edit, Glob
 # fcxo-post – a post worth reading, in your voice
 
 Write a short professional post that hands the reader one real, usable idea and sounds
-like the user, not like AI. Two modes: **draft** (a topic -> a post) and **finalize**
+like the user. Two modes: **draft** (a topic -> a post) and **finalize**
 (an existing draft -> polished, voice-enforced, ready to publish). Default channel is
 LinkedIn (where fractional executives are), but the post works for any channel; take it
 from `$ARGUMENTS` or ask.
@@ -19,7 +19,7 @@ and the draft-only rule.
 ## The voice guide is the source of truth
 
 Every post obeys one file: `me/<Owner> - Voice.md` under the workspace root - the user's
-voice and post style guide, the content analogue of `me/brand/DESIGN.md`. It holds the voice, the
+voice and post style guide, the content analogue of `design/DESIGN.md`. It holds the voice, the
 format rules, the do's and don'ts, and a **Learned from feedback** section that grows
 every time the user corrects a post. Resolve it before writing:
 
@@ -62,7 +62,7 @@ once that running this skill starts building their own.
 This is what makes the skill improve with use. After you draft or finalize, the user
 often reacts ("I don't open with a question", "too salesy", "always end on a concrete
 detail", "drop the emoji"). When the feedback is a **durable rule** - something that
-should hold for every future post, not just a fix to this one - **append it to the
+should hold for every future post - **append it to the
 "Learned from feedback" section of `me/<Owner> - Voice.md`** as a short, dated, plain
 rule, so the next post applies it automatically.
 
