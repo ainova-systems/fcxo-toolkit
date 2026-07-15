@@ -5,6 +5,15 @@ All notable changes to the FCxO Toolkit plugin.
 The format is based on [Keep a Changelog](https://keepachangelog.com/), and this
 project adheres to [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Changed
+
+- `fcxo-init` now writes into `Practice Workspace - Init.md` two rules that Cowork needs
+  stated: **save every result as a file in the workspace, not only in the chat** (Cowork
+  will otherwise answer in the conversation and the practice keeps nothing), and **work
+  inside the project folder**. The install-once project-instructions block carries them.
+
 ## [0.2.3] - 2026-07-15
 
 ### Added

@@ -126,9 +126,12 @@ sentences with no wiki-links (the target surface has no vault to resolve them):
   `documents/`), `sop/` (the procedures the owner follows), `research/` (dated procedure
   outputs), `content/`, `finance/`, and the `templates/` + `design/` pair.
 - The rules that matter at read time: one company, one folder; read the workspace before
-  asking what it already answers; draft only, so nothing is sent and every draft is delivered
-  into the workspace; filenames carry full context and are unique, so a name resolves from any
-  folder.
+  asking what it already answers; **save every result as a file in the right folder here,
+  not only in the chat** (a proposal, report, call summary, logged message or SOP is written
+  to disk where it belongs, so the practice keeps it and the next task can read it); **work
+  inside this folder** and do not reach outside it; draft only, so nothing is sent and every
+  draft is delivered into the workspace; filenames carry full context and are unique, so a
+  name resolves from any folder.
 
 `Practice Workspace - Init.md` follows the same root-file naming as its two siblings,
 `Practice Workspace - Guide.md` and `Practice Workspace - Integrations.md`. It is the short,
