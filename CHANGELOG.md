@@ -5,7 +5,7 @@ All notable changes to the FCxO Toolkit plugin.
 The format is based on [Keep a Changelog](https://keepachangelog.com/), and this
 project adheres to [Semantic Versioning](https://semver.org/).
 
-## [Unreleased]
+## [0.2.4] - 2026-07-15
 
 ### Changed
 
@@ -273,6 +273,7 @@ same in Claude Code and Claude Cowork, with nothing to install.
   status updates and deliverables feed the renewal review; the renewal review feeds
   case studies; case studies feed proposals and posts.
 
+[0.2.4]: https://github.com/ainova-systems/fcxo-toolkit/releases/tag/v0.2.4
 [0.2.3]: https://github.com/ainova-systems/fcxo-toolkit/releases/tag/v0.2.3
 [0.2.2]: https://github.com/ainova-systems/fcxo-toolkit/releases/tag/v0.2.2
 [0.2.1]: https://github.com/ainova-systems/fcxo-toolkit/releases/tag/v0.2.1
