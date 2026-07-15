@@ -5,6 +5,18 @@ All notable changes to the FCxO Toolkit plugin.
 The format is based on [Keep a Changelog](https://keepachangelog.com/), and this
 project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.2.7] - 2026-07-15
+
+### Changed
+
+- `fcxo-init` now states two authoring conventions in the `AGENTS.md` it writes, so an agent
+  that only sees `AGENTS.md` follows them - on Claude Cowork the file is pasted into the
+  project instructions and the workspace Guide is never read on its own. Dated outputs (scans,
+  reviews, call summaries, logs) lead with the date as `YYYY-MM-DD - <Title>`, and a note links
+  the files it refers to by exact filename in double square brackets with no path and no `.md`.
+  Both conventions already lived in the Guide and the shared reference, but a Cowork agent had
+  no way to reach them.
+
 ## [0.2.6] - 2026-07-15
 
 ### Changed

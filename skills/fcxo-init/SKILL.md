@@ -124,8 +124,11 @@ it short: it loads into context on every message. It states:
   not only in the chat** (a proposal, report, call summary, logged message or SOP is written
   to disk where it belongs, so the practice keeps it and the next task can read it); **work
   inside this folder** and do not reach outside it; draft only, so nothing is sent and every
-  draft is delivered into the workspace; filenames carry full context and are unique, so a
-  name resolves from any folder.
+  draft is delivered into the workspace; filenames carry full context and are unique, with
+  dated outputs (scans, reviews, call summaries, logs) leading with the date as
+  `YYYY-MM-DD - <Title>`, so a name resolves from any folder; and a note links the files it
+  refers to by their exact filename in double square brackets, with no folder path and no
+  `.md`, so the practice stays one connected graph.
 - A closing line naming the Cowork exception: Claude Code, Codex and Cursor load this file
   automatically, and Claude Cowork does not read a folder's files on its own, so on Cowork
   this content is pasted into the project's instructions once (see `Practice Workspace - Init.md`).
