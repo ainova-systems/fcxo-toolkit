@@ -51,6 +51,7 @@ records: it is a document, and documents live in `proposals/`.
 
 ```
 practice/
+├── Practice Workspace - Init.md           # paste into the Cowork project's instructions (written by fcxo-init)
 ├── Practice Workspace - Guide.md          # how to use this workspace (written by fcxo-init)
 ├── Practice Workspace - Integrations.md   # which connected tool serves which capability
 ├── me/                          # who the owner is (identity, never documents)

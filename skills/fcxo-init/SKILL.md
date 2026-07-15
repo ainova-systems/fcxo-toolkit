@@ -103,6 +103,37 @@ order the skills run in; any skill also runs on its own, and one that cannot fin
 it would have read asks for what it needs. Do not copy the sequences into the guide -
 `/fcxo-help` reads them from the plugin, so they stay current as the toolkit changes.
 
+### `practice/Practice Workspace - Init.md`
+The root file the user pastes into their agent surface once, so the assistant reads this
+workspace on its own. Claude Cowork does not open the folder's files automatically, but it
+does read a project's **Instructions** at the start of every task, so the workspace map has
+to live there. This file holds the exact block to paste, so the user copies it in and never
+has to explain where things are again.
+
+Write `Practice Workspace - Init.md` as a short header telling the user to copy the fenced block below into their
+Cowork project's **Instructions** field (or the equivalent per-project instructions on
+whatever surface they run), followed by the block itself. Keep the block short, because
+project instructions load into context on every message. The block states, in plain
+sentences with no wiki-links (the target surface has no vault to resolve them):
+
+- This folder is a `<role>` practice workspace of plain markdown files; work from the files,
+  never from memory. Substitute the owner's real role from their profile.
+- Before any task, read the files it needs. A company name is a complete instruction: find
+  that company's folder and read everything in it before acting.
+- A compact folder map: `me/` (who the owner is: profile, positioning, offers, voice),
+  `leads/<slug>/` and `clients/<slug>/` (one folder per company: the record plus
+  `communications/`, `meetings/`, `proposals/`; a client also has `engagements/<id>/` and
+  `documents/`), `sop/` (the procedures the owner follows), `research/` (dated procedure
+  outputs), `content/`, `finance/`, and the `templates/` + `design/` pair.
+- The rules that matter at read time: one company, one folder; read the workspace before
+  asking what it already answers; draft only, so nothing is sent and every draft is delivered
+  into the workspace; filenames carry full context and are unique, so a name resolves from any
+  folder.
+
+`Practice Workspace - Init.md` follows the same root-file naming as its two siblings,
+`Practice Workspace - Guide.md` and `Practice Workspace - Integrations.md`. It is the short,
+paste-ready form of the guide, so keep the two consistent when either changes.
+
 ### `practice/Practice Workspace - Integrations.md`
 The second root file, beside the guide: the registry that says which connected tool serves
 which capability. This toolkit ships no connectors and no credentials. The user connects
@@ -284,12 +315,19 @@ plus `design/<Doc>.html`).
 ## Step 5 – Confirm
 
 Summarize what was created in plain language (where it is, what's inside, what's still
-`TODO`). List the root files by name, `Practice Workspace - Guide.md` and
+`TODO`). List the root files by name, `Practice Workspace - Init.md`, `Practice Workspace - Guide.md` and
 `Practice Workspace - Integrations.md`, alongside the `me/`, `sop/`, `templates/` and
 `design/` starters. Say in one line what `sop/` is for: the procedures they follow, written
 down, one file each, which `/fcxo-write-sop` produces and which they then schedule or build
 into a skill. Mention that the scaffolded files are wikilinked to each other (the guide and
 the `me/` files cross-link), so the workspace opens as a connected graph in Obsidian.
+
+**Call out `Practice Workspace - Init.md` as the one setup step that is theirs to do.** Tell them, plainly, to
+open `Practice Workspace - Init.md` and copy its block into their Cowork project's **Instructions** field (project
+settings). Say why in one sentence: Cowork does not open the folder's files on its own, but it
+reads project instructions every task, so pasting this once is what makes the assistant find
+and read the right files without being told where they are. Without it, a skill or a request
+may not know to look in the workspace at all.
 
 **Say one sentence about integrations.** The toolkit ships no connectors: the user connects
 email or a calendar in their own agent surface and writes the tool's name into the empty

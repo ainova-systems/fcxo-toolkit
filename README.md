@@ -31,6 +31,7 @@ If you have no workspace, the skills still run – they just ask for the context
 
 ```
 practice/
+├── Practice Workspace - Init.md           # paste into your Cowork project's instructions
 ├── Practice Workspace - Guide.md          # how to use this workspace
 ├── Practice Workspace - Integrations.md   # which connected tool serves which capability
 ├── me/

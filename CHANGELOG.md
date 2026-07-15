@@ -5,6 +5,19 @@ All notable changes to the FCxO Toolkit plugin.
 The format is based on [Keep a Changelog](https://keepachangelog.com/), and this
 project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.2.3] - 2026-07-15
+
+### Added
+
+- `Practice Workspace - Init.md` - the root file `fcxo-init` writes so the user can make the
+  workspace self-orienting on their agent surface. Claude Cowork does not open a folder's
+  files on its own, but it reads a project's Instructions at the start of every task, so the
+  workspace map has to live there. This file holds the exact block to paste into the Cowork
+  project's Instructions field: what the workspace is, where each folder sits, and the
+  read-time rules (one company one folder, read before asking, draft only). Paste it once and
+  the assistant finds and reads the right files without being told where they are. `fcxo-init`
+  now writes it and, at the end of setup, tells the user to paste it in.
+
 ## [0.2.2] - 2026-07-15
 
 ### Changed
@@ -242,6 +255,7 @@ same in Claude Code and Claude Cowork, with nothing to install.
   status updates and deliverables feed the renewal review; the renewal review feeds
   case studies; case studies feed proposals and posts.
 
+[0.2.3]: https://github.com/ainova-systems/fcxo-toolkit/releases/tag/v0.2.3
 [0.2.2]: https://github.com/ainova-systems/fcxo-toolkit/releases/tag/v0.2.2
 [0.2.1]: https://github.com/ainova-systems/fcxo-toolkit/releases/tag/v0.2.1
 [0.2.0]: https://github.com/ainova-systems/fcxo-toolkit/releases/tag/v0.2.0
