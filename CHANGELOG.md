@@ -9,10 +9,15 @@ project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Changed
 
-- `fcxo-init` now writes into `Practice Workspace - Init.md` two rules that Cowork needs
-  stated: **save every result as a file in the workspace, not only in the chat** (Cowork
-  will otherwise answer in the conversation and the practice keeps nothing), and **work
-  inside the project folder**. The install-once project-instructions block carries them.
+- **Workspace orientation now lives in `AGENTS.md`.** `fcxo-init` writes the workspace map
+  and read-time rules to `AGENTS.md` at the root, which Claude Code, Codex and Cursor load
+  automatically (Claude Code falls back to `AGENTS.md` when there is no `CLAUDE.md`), so those
+  surfaces orient themselves with no setup. `Practice Workspace - Init.md` becomes the Cowork
+  pointer: Cowork does not read a folder's files, so the user pastes `AGENTS.md` into the
+  project's instructions once. `AGENTS.md` is the single source of truth.
+- The orientation states two rules Cowork needs: **save every result as a file in the
+  workspace, not only in the chat** (Cowork will otherwise answer in the conversation and the
+  practice keeps nothing), and **work inside the project folder**.
 
 ## [0.2.3] - 2026-07-15
 

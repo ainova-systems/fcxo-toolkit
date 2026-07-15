@@ -31,7 +31,8 @@ If you have no workspace, the skills still run – they just ask for the context
 
 ```
 practice/
-├── Practice Workspace - Init.md           # paste into your Cowork project's instructions
+├── AGENTS.md                              # auto-loaded orientation (Claude Code / Codex / Cursor)
+├── Practice Workspace - Init.md           # Cowork setup: paste AGENTS.md into the project's instructions
 ├── Practice Workspace - Guide.md          # how to use this workspace
 ├── Practice Workspace - Integrations.md   # which connected tool serves which capability
 ├── me/

@@ -103,18 +103,12 @@ order the skills run in; any skill also runs on its own, and one that cannot fin
 it would have read asks for what it needs. Do not copy the sequences into the guide -
 `/fcxo-help` reads them from the plugin, so they stay current as the toolkit changes.
 
-### `practice/Practice Workspace - Init.md`
-The root file the user pastes into their agent surface once, so the assistant reads this
-workspace on its own. Claude Cowork does not open the folder's files automatically, but it
-does read a project's **Instructions** at the start of every task, so the workspace map has
-to live there. This file holds the exact block to paste, so the user copies it in and never
-has to explain where things are again.
-
-Write `Practice Workspace - Init.md` as a short header telling the user to copy the fenced block below into their
-Cowork project's **Instructions** field (or the equivalent per-project instructions on
-whatever surface they run), followed by the block itself. Keep the block short, because
-project instructions load into context on every message. The block states, in plain
-sentences with no wiki-links (the target surface has no vault to resolve them):
+### `practice/AGENTS.md`
+The auto-loading orientation file. Claude Code, Codex and Cursor read `AGENTS.md` at the
+start of a session (Claude Code reads `CLAUDE.md` first and falls back to `AGENTS.md` when
+there is none), so on those surfaces the assistant orients itself with no setup. Write it as
+plain sentences with no wiki-links, since the loading tool has no vault to resolve them. Keep
+it short: it loads into context on every message. It states:
 
 - This folder is a `<role>` practice workspace of plain markdown files; work from the files,
   never from memory. Substitute the owner's real role from their profile.
@@ -132,10 +126,19 @@ sentences with no wiki-links (the target surface has no vault to resolve them):
   inside this folder** and do not reach outside it; draft only, so nothing is sent and every
   draft is delivered into the workspace; filenames carry full context and are unique, so a
   name resolves from any folder.
+- A closing line naming the Cowork exception: Claude Code, Codex and Cursor load this file
+  automatically, and Claude Cowork does not read a folder's files on its own, so on Cowork
+  this content is pasted into the project's instructions once (see `Practice Workspace - Init.md`).
 
-`Practice Workspace - Init.md` follows the same root-file naming as its two siblings,
-`Practice Workspace - Guide.md` and `Practice Workspace - Integrations.md`. It is the short,
-paste-ready form of the guide, so keep the two consistent when either changes.
+### `practice/Practice Workspace - Init.md`
+The Cowork setup pointer. `AGENTS.md` is the single source of truth and auto-loads on Claude
+Code, Codex and Cursor, so this file exists for the one surface that does not: Claude Cowork,
+which does not open a folder's files but does read a project's **Instructions** every task.
+Write it short: `AGENTS.md` holds the workspace instructions, and on Cowork the user opens
+`AGENTS.md`, copies its whole contents, and pastes them into the Cowork project's Instructions
+field once. Say that `AGENTS.md` is the source, so a change to it means re-pasting. Mention the
+optional one-line `CLAUDE.md` containing `@AGENTS.md` for older Claude Code versions that read
+only `CLAUDE.md`, and that current Claude Code needs it only as belt-and-suspenders.
 
 ### `practice/Practice Workspace - Integrations.md`
 The second root file, beside the guide: the registry that says which connected tool serves
@@ -318,19 +321,20 @@ plus `design/<Doc>.html`).
 ## Step 5 – Confirm
 
 Summarize what was created in plain language (where it is, what's inside, what's still
-`TODO`). List the root files by name, `Practice Workspace - Init.md`, `Practice Workspace - Guide.md` and
-`Practice Workspace - Integrations.md`, alongside the `me/`, `sop/`, `templates/` and
-`design/` starters. Say in one line what `sop/` is for: the procedures they follow, written
-down, one file each, which `/fcxo-write-sop` produces and which they then schedule or build
-into a skill. Mention that the scaffolded files are wikilinked to each other (the guide and
-the `me/` files cross-link), so the workspace opens as a connected graph in Obsidian.
+`TODO`). List the root files by name, `AGENTS.md`, `Practice Workspace - Init.md`,
+`Practice Workspace - Guide.md` and `Practice Workspace - Integrations.md`, alongside the
+`me/`, `sop/`, `templates/` and `design/` starters. Say in one line what `sop/` is for: the
+procedures they follow, written down, one file each, which `/fcxo-write-sop` produces and
+which they then schedule or build into a skill. Mention that the scaffolded files are
+wikilinked to each other (the guide and the `me/` files cross-link), so the workspace opens as
+a connected graph in Obsidian.
 
-**Call out `Practice Workspace - Init.md` as the one setup step that is theirs to do.** Tell them, plainly, to
-open `Practice Workspace - Init.md` and copy its block into their Cowork project's **Instructions** field (project
-settings). Say why in one sentence: Cowork does not open the folder's files on its own, but it
-reads project instructions every task, so pasting this once is what makes the assistant find
-and read the right files without being told where they are. Without it, a skill or a request
-may not know to look in the workspace at all.
+**Say how orientation loads, and the one setup step that is theirs.** On Claude Code, Codex or
+Cursor, `AGENTS.md` loads on its own, so there is nothing to do. On Claude Cowork, which does
+not open a folder's files but reads a project's instructions every task, they open `AGENTS.md`,
+copy its contents, and paste them into the Cowork project's **Instructions** field once. Say why
+in one sentence: pasting this once is what makes the assistant find and read the right files
+without being told where they are, and `Practice Workspace - Init.md` walks them through it.
 
 **Say one sentence about integrations.** The toolkit ships no connectors: the user connects
 email or a calendar in their own agent surface and writes the tool's name into the empty
