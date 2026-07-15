@@ -137,12 +137,13 @@ recency counts. Pull these from the past outputs and the user's own knowledge; w
 thin, that is what the build rung's research fills. Every field a run produces is grounded in a
 page actually opened that run, and carries its source URL.
 
-**A recurring procedure carries its own memory and sharpens over runs.**
-Two things do it: a dedup record of what it has already produced, so it never re-surfaces the
-same result, and a short learnings note the run appends to - which queries or sources produced
-good results, which produced noise - so the source list and queries improve over runs. The SOP
-names where both live. Often that is the existing records and the dated outputs already in the
-workspace; a practice that prefers a single ledger file names that instead.
+**A recurring procedure carries its own memory: a dedup record.** The record of what it has
+already produced - the existing entries and the dated outputs already in the workspace - is what
+lets a run recognise a result it has seen and skip it, so it never re-surfaces the same one. The
+SOP names where that record lives. A run reads its configuration and reference files and reads
+that record, then writes new records and a new dated output; it does not edit its reference files
+or a past dated output. A dated file is a snapshot of its day, so a later run never rewrites it -
+the procedure improves by what a person curates in the reference, not by writing back into it.
 
 **Zero is a valid result.** A genuine run that finds nothing new produces an empty output and
 says so. It never invents a result to fill the page or to reach a number.

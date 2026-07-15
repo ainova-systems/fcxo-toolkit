@@ -5,6 +5,17 @@ All notable changes to the FCxO Toolkit plugin.
 The format is based on [Keep a Changelog](https://keepachangelog.com/), and this
 project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.2.8] - 2026-07-15
+
+### Changed
+
+- `fcxo-write-sop` no longer has a recurring procedure write back into its own reference or a
+  past dated output. A procedure's memory is its dedup record, which a run reads; the run writes
+  new records and a new dated output and leaves its inputs untouched. A dated file is a snapshot
+  of its day, so a later run never rewrites it, and the procedure improves by what a person
+  curates in the reference rather than by appending to it. This removes the failure where a
+  generated scan SOP appended run learnings to a dated sources file and mutated a snapshot.
+
 ## [0.2.7] - 2026-07-15
 
 ### Changed
