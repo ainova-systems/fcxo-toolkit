@@ -115,8 +115,12 @@ The body carries:
   procedure has them. Where the result saves, and how the file is named.
 - **Boundaries** - what the procedure never does. Draft-only holds here as everywhere: a
   procedure produces research, drafts and records for the user to review, and it sends nothing.
-- **Cadence** - a fact about the user's week ("Rowan runs this on Monday mornings"), stated in
-  the body.
+
+**No cadence in the SOP.** The SOP is what the procedure does. When it runs, and how often, is
+set by the schedule or by whoever runs it, so the same file works run by hand or on any
+cadence. Do not write a day or a frequency into the SOP, the same way the title carries no
+cadence word. If the user mentions one ("I do this on Mondays"), it is context for the schedule
+they set later, not a line in the procedure.
 
 For a built SOP, add one line near the top: this is a proposed procedure drawn from how the
 work is done plus the user's practice, and it sharpens as they run it. A captured SOP does not

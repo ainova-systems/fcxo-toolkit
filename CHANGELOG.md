@@ -18,6 +18,10 @@ project adheres to [Semantic Versioning](https://semver.org/).
 - The orientation states two rules Cowork needs: **save every result as a file in the
   workspace, not only in the chat** (Cowork will otherwise answer in the conversation and the
   practice keeps nothing), and **work inside the project folder**.
+- `fcxo-write-sop` no longer writes a cadence into the SOP. The SOP is what the procedure
+  does; when it runs and how often is set by the schedule or by whoever runs it, so the same
+  file works run by hand or on any cadence. A cadence the user mentions is context for the
+  schedule they set later, the same way the title carries no cadence word.
 
 ## [0.2.3] - 2026-07-15
 
