@@ -1,6 +1,6 @@
 {
   "name": "fcxo-toolkit",
-  "version": "0.2.8",
+  "version": "0.2.9",
   "description": "Operational toolkit for fractional executives (CEO/CMO/CSO/CTO/COO/CFO): find and win clients (research, qualify, outreach, call prep, proposals), deliver and retain (status updates, decision reports, onboarding plans, renewal reviews, branded client reports), market yourself, and run the back-office of a solo practice. Role-aware, works standalone, shell-free so it runs the same in Claude Code and Claude Cowork, anchored on a lightweight markdown practice workspace.",
   "author": {
     "name": "Dmitrij Zykovic",

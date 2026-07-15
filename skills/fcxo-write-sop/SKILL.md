@@ -94,9 +94,9 @@ Save it to `sop/<Procedure> - SOP.md`. `sop/` holds the procedures the user foll
 holds identity (profile, positioning, offers, voice). A procedure is not identity.
 
 **The title says what the procedure does, and carries no cadence word.** "Lead Opportunity
-Scan" names the work. Capabilities and cadence are separate layers: the schedule owns the
-cadence, so the title holds whether they run it weekly, every second week, or twice in one
-week.
+Scan", "Client Onboarding", or "Monthly Close" each name the work. Capabilities and cadence are
+separate layers: the schedule owns the cadence, so the title holds whether they run it weekly,
+every second week, or twice in one week.
 
 ```yaml
 ---
@@ -129,24 +129,22 @@ format; the data in a run comes from the source. Pair this with a stop rule: if 
 unreachable or the evidence is missing, the run stops and says so, rather than filling the gap
 or padding to a target count.
 
-**A live-source procedure is only as good as its specifics.** A source list of categories -
-"job boards, news, company pages" - is too vague to run well and invites hand-waving. Name the
-concrete sources, the actual search queries, and the signal language that separates a real
-buying signal from a generic fit: which boards or sites, which exact titles or phrases, what
-recency counts. Pull these from the past outputs and the user's own knowledge; where they are
-thin, that is what the build rung's research fills. Every field a run produces is grounded in a
-page actually opened that run, and carries its source URL.
+**When a procedure reads a live source, name its specifics.** A list of categories is too vague
+to run well and invites hand-waving, so name the concrete sources and what the procedure looks
+for in each - which systems or pages, which fields or records, what counts as current. Pull
+these from the past outputs and the user's own knowledge; where they are thin, that is what the
+build rung's research fills. Every result a run produces is built from what a source actually
+returned that run, and carries where it came from.
 
-**A recurring procedure carries its own memory: a dedup record.** The record of what it has
-already produced - the existing entries and the dated outputs already in the workspace - is what
-lets a run recognise a result it has seen and skip it, so it never re-surfaces the same one. The
-SOP names where that record lives. A run reads its configuration and reference files and reads
-that record, then writes new records and a new dated output; it does not edit its reference files
-or a past dated output. A dated file is a snapshot of its day, so a later run never rewrites it -
-the procedure improves by what a person curates in the reference, not by writing back into it.
+**A procedure that runs repeatedly reads its own record.** The entries and dated outputs already
+in the workspace let a run recognise what it has already handled and not repeat it. The SOP names
+where that record lives. A run reads its reference and configuration files and that record, then
+writes new records and a new dated output; it does not edit its reference files or a past dated
+output, because a dated file is a snapshot of its day. The procedure improves by what a person
+curates in the reference, not by writing back into it.
 
-**Zero is a valid result.** A genuine run that finds nothing new produces an empty output and
-says so. It never invents a result to fill the page or to reach a number.
+**An empty result is a valid result.** A genuine run that finds nothing new produces an empty
+output and says so. It never invents a result to fill the page or to reach a number.
 
 For a built SOP, add one line near the top: this is a proposed procedure drawn from how the
 work is done plus the user's practice, and it sharpens as they run it. A captured SOP does not

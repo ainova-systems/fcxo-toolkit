@@ -5,6 +5,17 @@ All notable changes to the FCxO Toolkit plugin.
 The format is based on [Keep a Changelog](https://keepachangelog.com/), and this
 project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.2.9] - 2026-07-15
+
+### Changed
+
+- `fcxo-write-sop`'s guidance for live-source and recurring procedures is now domain-neutral, so
+  it reads as one class of procedure among many and does not skew the general skill toward lead
+  scans. The substance is unchanged - operate on the real source, name the concrete specifics,
+  read a record to avoid repeating, never rewrite a dated output, an empty result is valid - but
+  the search- and lead-specific wording (queries, buying signals, boards, dedup) is gone, and the
+  title example now spans onboarding and month-close procedures too.
+
 ## [0.2.8] - 2026-07-15
 
 ### Changed
