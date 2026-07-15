@@ -5,6 +5,20 @@ All notable changes to the FCxO Toolkit plugin.
 The format is based on [Keep a Changelog](https://keepachangelog.com/), and this
 project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.2.5] - 2026-07-15
+
+### Changed
+
+- `fcxo-write-sop` now hardens any SOP whose procedure reads a live or external source (the
+  web, email, a calendar, a CRM): the written SOP must say to operate on the real source on
+  every run and return only real, verifiable results, and it pairs that with a stop rule so an
+  unreachable source or missing evidence halts the run instead of being filled with invented
+  output. Past outputs define the output format only, never a licence to reproduce their data,
+  and example or sandbox content in the workspace (placeholder names, a `.example` domain) is
+  decoration around the work, never a signal to simulate. This closes the failure mode where a
+  procedure copied a workspace's example convention and fabricated results instead of doing the
+  real work.
+
 ## [0.2.4] - 2026-07-15
 
 ### Changed

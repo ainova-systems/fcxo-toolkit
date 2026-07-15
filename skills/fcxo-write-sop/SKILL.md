@@ -122,6 +122,16 @@ cadence. Do not write a day or a frequency into the SOP, the same way the title 
 cadence word. If the user mentions one ("I do this on Mondays"), it is context for the schedule
 they set later, not a line in the procedure.
 
+**Live sources are operated, not imitated.** When the procedure reads an external or live
+source - the web, email, a calendar, a CRM - the SOP must say to operate on the real source on
+every run and return only real, verifiable results. Past outputs define the output format, never
+a licence to reproduce their data. Example or sandbox content in the workspace (placeholder
+names, a `.example` domain, a note that the records are illustrative) is decoration around the
+work, not the goal of a run: it must never turn the procedure into a simulation. State this in
+the SOP where the procedure touches a live source, and pair it with a stop rule - if the real
+source is unreachable or the evidence is missing, the run stops and says so, and never invents a
+result or fabricates to reach a target count.
+
 For a built SOP, add one line near the top: this is a proposed procedure drawn from how the
 work is done plus the user's practice, and it sharpens as they run it. A captured SOP does not
 need that note, because it already describes what the user does.
