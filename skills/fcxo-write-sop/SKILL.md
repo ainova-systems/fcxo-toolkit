@@ -122,15 +122,30 @@ cadence. Do not write a day or a frequency into the SOP, the same way the title 
 cadence word. If the user mentions one ("I do this on Mondays"), it is context for the schedule
 they set later, not a line in the procedure.
 
-**Live sources are operated, not imitated.** When the procedure reads an external or live
-source - the web, email, a calendar, a CRM - the SOP must say to operate on the real source on
-every run and return only real, verifiable results. Past outputs define the output format, never
-a licence to reproduce their data. Example or sandbox content in the workspace (placeholder
-names, a `.example` domain, a note that the records are illustrative) is decoration around the
-work, not the goal of a run: it must never turn the procedure into a simulation. State this in
-the SOP where the procedure touches a live source, and pair it with a stop rule - if the real
-source is unreachable or the evidence is missing, the run stops and says so, and never invents a
-result or fabricates to reach a target count.
+**Operate on the live source.** When the procedure reads an external or live source - the web,
+email, a calendar, a CRM - the SOP says to open that source on every run and build the output
+from what it returns, each result carrying where it came from. Past outputs set the output
+format; the data in a run comes from the source. Pair this with a stop rule: if the source is
+unreachable or the evidence is missing, the run stops and says so, rather than filling the gap
+or padding to a target count.
+
+**A live-source procedure is only as good as its specifics.** A source list of categories -
+"job boards, news, company pages" - is too vague to run well and invites hand-waving. Name the
+concrete sources, the actual search queries, and the signal language that separates a real
+buying signal from a generic fit: which boards or sites, which exact titles or phrases, what
+recency counts. Pull these from the past outputs and the user's own knowledge; where they are
+thin, that is what the build rung's research fills. Every field a run produces is grounded in a
+page actually opened that run, and carries its source URL.
+
+**A recurring procedure carries its own memory and sharpens over runs.**
+Two things do it: a dedup record of what it has already produced, so it never re-surfaces the
+same result, and a short learnings note the run appends to - which queries or sources produced
+good results, which produced noise - so the source list and queries improve over runs. The SOP
+names where both live. Often that is the existing records and the dated outputs already in the
+workspace; a practice that prefers a single ledger file names that instead.
+
+**Zero is a valid result.** A genuine run that finds nothing new produces an empty output and
+says so. It never invents a result to fill the page or to reach a number.
 
 For a built SOP, add one line near the top: this is a proposed procedure drawn from how the
 work is done plus the user's practice, and it sharpens as they run it. A captured SOP does not

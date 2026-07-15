@@ -5,6 +5,24 @@ All notable changes to the FCxO Toolkit plugin.
 The format is based on [Keep a Changelog](https://keepachangelog.com/), and this
 project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.2.6] - 2026-07-15
+
+### Changed
+
+- `fcxo-write-sop` now guides an SOP whose procedure reads a live source toward the specifics
+  that make it runnable: the concrete sources, the actual search queries, and the signal
+  language that separates a real buying signal from a generic fit, rather than a list of
+  categories a run can only hand-wave against. Each result a run produces is grounded in a page
+  opened that run and carries its source URL.
+- A recurring procedure is guided to carry its own memory: a dedup record so a known result is
+  never re-surfaced, and a short learnings note the run appends to (which queries or sources
+  produced good results, which produced noise) so it sharpens over runs. Finding nothing new is
+  stated as a valid result.
+- The live-source guidance is written as plain operating instructions (open the source, build
+  from what it returns, carry provenance, stop if it is unreachable) instead of a defensive
+  "not a simulation" framing. Removing the workspace's own example-data declaration is what
+  fixes the fabrication; the SOP does not need to argue against it.
+
 ## [0.2.5] - 2026-07-15
 
 ### Changed
